@@ -1,0 +1,3844 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>The Robotic Origami Challenge — IROS 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #f3ecde;
+        --paper-2: #eadfc7;
+        --paper-3: #dfd2b4;
+        --ink: #1a1614;
+        --ink-2: #3a342e;
+        --ink-3: #6b6258;
+        --ink-4: #9a9087;
+        --rule: #cbbfa5;
+        --rule-soft: #dcd1b8;
+        --vermillion: #c8372d;
+        --vermillion-deep: #9e241c;
+        --sakura: #e8b4c0;
+        --display: 'Fraunces', Georgia, serif;
+        --text:
+          'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--text);
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* Japanese line-breaking: enforce strict kinsoku rules so small
+         kana / punctuation never start a line, and use phrase-aware
+         breaks where supported. Apply only when lang=ja is active. */
+      html[lang='ja'] {
+        line-break: strict;
+        word-break: normal;
+        overflow-wrap: anywhere;
+      }
+      html[lang='ja'] h1,
+      html[lang='ja'] h2,
+      html[lang='ja'] h3,
+      html[lang='ja'] h4,
+      html[lang='ja'] h5,
+      html[lang='ja'] .btn-primary,
+      html[lang='ja'] .btn-ghost,
+      html[lang='ja'] .btn-cta,
+      html[lang='ja'] .v,
+      html[lang='ja'] .k,
+      html[lang='ja'] .chip,
+      html[lang='ja'] .partner,
+      html[lang='ja'] .res-card .desc,
+      html[lang='ja'] .faq-q,
+      html[lang='ja'] .faq-a,
+      html[lang='ja'] .hero-sub,
+      html[lang='ja'] .section-lede,
+      html[lang='ja'] .rules-lede,
+      html[lang='ja'] .rules-punchline {
+        line-break: strict;
+        word-break: auto-phrase;
+        overflow-wrap: break-word;
+      }
+      /* subtle paper grain */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.08  0 0 0 0 0.06  0 0 0 0 0.05  0 0 0 0.025 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        mix-blend-mode: multiply;
+        opacity: 0.8;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: var(--display);
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      p {
+        margin: 0;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      ::selection {
+        background: var(--vermillion);
+        color: var(--paper);
+      }
+
+      .wrap {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 0 40px;
+        position: relative;
+        z-index: 3;
+      }
+      .wrap-narrow {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 0 40px;
+        position: relative;
+        z-index: 3;
+      }
+
+      /* ---------- NAV ---------- */
+      nav.top {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(243, 236, 222, 0.85);
+        backdrop-filter: blur(14px) saturate(1.1);
+        -webkit-backdrop-filter: blur(14px) saturate(1.1);
+        border-bottom: 1px solid var(--rule);
+      }
+      nav.top .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+        gap: 20px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand .seal {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--vermillion);
+        display: grid;
+        place-items: center;
+        color: var(--paper);
+        font-family: var(--display);
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+      }
+      .brand .wm {
+        font-family: var(--display);
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        color: var(--ink);
+      }
+      .brand .wm em {
+        font-style: italic;
+        color: var(--vermillion);
+        font-weight: 400;
+      }
+      nav.top ul {
+        display: flex;
+        gap: 26px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+      }
+      nav.top li a {
+        font-family: var(--text);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-2);
+        transition: color 0.2s;
+      }
+      nav.top li a:hover {
+        color: var(--vermillion);
+      }
+      .btn-cta {
+        font-family: var(--text);
+        font-size: 13px;
+        font-weight: 500;
+        padding: 8px 16px;
+        background: var(--ink);
+        color: var(--paper);
+        border: 0;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-cta:hover {
+        background: var(--vermillion);
+      }
+      .lang-select {
+        appearance: none;
+        -webkit-appearance: none;
+        font-family: var(--text);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--ink-2);
+        background: transparent;
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+        padding: 5px 26px 5px 12px;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%231a1614' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .lang-select:hover {
+        color: var(--vermillion);
+        border-color: var(--vermillion);
+      }
+      .lang-select:focus {
+        outline: none;
+        border-color: var(--vermillion);
+      }
+      .btn-disabled {
+        display: inline-block;
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+        background: var(--ink-3);
+        color: var(--paper);
+      }
+      .btn-disabled:hover {
+        background: var(--ink-3);
+      }
+
+      /* ---------- HERO ---------- */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        background: #1a1614;
+        display: grid;
+        grid-template-rows: 1fr;
+        text-align: center;
+        isolation: isolate;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .hero-bg video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.85) brightness(0.5) contrast(1.05);
+      }
+      .hero-bg .scrim {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(26, 22, 20, 0.55) 0%,
+            rgba(26, 22, 20, 0.25) 35%,
+            rgba(26, 22, 20, 0.85) 100%
+          ),
+          radial-gradient(
+            ellipse 70% 55% at 18% 50%,
+            rgba(200, 55, 45, 0.22) 0%,
+            transparent 60%
+          );
+      }
+      .hero-bg::after {
+        /* paper-grain texture, very subtle */
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          radial-gradient(
+            circle at 20% 30%,
+            rgba(243, 236, 222, 0.04) 0,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 70% 60%,
+            rgba(243, 236, 222, 0.03) 0,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(243, 236, 222, 0.04) 0,
+            transparent 1px
+          );
+        background-size:
+          7px 7px,
+          11px 11px,
+          13px 13px;
+        mix-blend-mode: overlay;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .hero-kanji-bg {
+        position: absolute;
+        right: -50px;
+        top: 50%;
+        transform: translateY(-45%);
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: clamp(360px, 42vw, 620px);
+        color: var(--paper);
+        opacity: 0.04;
+        line-height: 0.85;
+        pointer-events: none;
+        user-select: none;
+        z-index: 1;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        align-self: start;
+        padding: 0 48px;
+        max-width: 1100px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--text);
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(243, 236, 222, 0.85);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        border-radius: 999px;
+        background: rgba(26, 22, 20, 0.4);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(243, 236, 222, 0.18);
+        margin-bottom: 32px;
+        white-space: nowrap;
+      }
+      .hero-eyebrow .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--vermillion);
+        box-shadow: 0 0 0 0 rgba(200, 55, 45, 0.5);
+        animation: heroPulse 2.4s infinite;
+      }
+      @keyframes heroPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(200, 55, 45, 0.55);
+        }
+        50% {
+          box-shadow: 0 0 0 7px rgba(200, 55, 45, 0);
+        }
+      }
+      .hero-eyebrow .kj {
+        font-family: var(--display);
+        font-style: italic;
+        color: var(--sakura);
+        font-size: 14px;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      .hero-eyebrow .sep {
+        color: rgba(243, 236, 222, 0.3);
+      }
+
+      h1.hero-title {
+        font-family: var(--display);
+        font-size: clamp(56px, 9vw, 132px);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        font-weight: 300;
+        color: var(--paper);
+        max-width: 16ch;
+        margin: 0 auto;
+      }
+      h1.hero-title em {
+        font-style: italic;
+        color: var(--sakura);
+        font-weight: 300;
+      }
+      .hero-sub {
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: clamp(18px, 1.7vw, 22px);
+        color: rgba(243, 236, 222, 0.78);
+        max-width: 52ch;
+        margin: 28px auto 0;
+        line-height: 1.45;
+      }
+      .hero-meta {
+        margin-top: 40px;
+        display: inline-flex;
+        align-items: center;
+        gap: 22px;
+        font-family: var(--text);
+        font-size: 13px;
+        color: rgba(243, 236, 222, 0.78);
+        padding: 14px 24px;
+        border: 1px solid rgba(243, 236, 222, 0.18);
+        border-radius: 999px;
+        background: rgba(26, 22, 20, 0.4);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+      .hero-meta .sep {
+        color: rgba(243, 236, 222, 0.25);
+      }
+      .hero-meta strong {
+        color: var(--paper);
+        font-weight: 500;
+      }
+      .hero-cta-row {
+        margin-top: 36px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .hero-cta-row .btn-ghost {
+        color: var(--paper);
+        border-color: rgba(243, 236, 222, 0.35);
+      }
+      .hero-cta-row .btn-ghost:hover {
+        background: var(--paper);
+        color: var(--ink);
+        border-color: var(--paper);
+      }
+
+      .btn-primary {
+        font-family: var(--text);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 12px 22px;
+        background: var(--vermillion);
+        color: var(--paper);
+        border: 0;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-primary:hover {
+        background: var(--vermillion-deep);
+      }
+      .btn-ghost {
+        font-family: var(--text);
+        font-size: 14px;
+        font-weight: 500;
+        padding: 11px 22px;
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-ghost:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      /* ---------- SECTIONS ---------- */
+      section {
+        padding: 96px 0;
+        position: relative;
+        z-index: 3;
+      }
+      section + section {
+        border-top: 1px solid var(--rule);
+      }
+      .section-head {
+        margin-bottom: 48px;
+      }
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--vermillion);
+        margin-bottom: 18px;
+      }
+      .section-label .kanji {
+        font-family: var(--display);
+        font-size: 14px;
+        color: var(--ink-4);
+        letter-spacing: 0;
+        text-transform: none;
+        font-style: italic;
+        font-weight: 400;
+      }
+      .section-label::before {
+        content: '';
+        width: 20px;
+        height: 1px;
+        background: var(--vermillion);
+      }
+      h2.section-title {
+        font-family: var(--display);
+        font-size: clamp(34px, 4.2vw, 56px);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        font-weight: 300;
+        color: var(--ink);
+        max-width: 22ch;
+      }
+      h2.section-title em {
+        font-style: italic;
+        color: var(--vermillion);
+        font-weight: 300;
+      }
+      .section-lede {
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: clamp(16px, 1.4vw, 19px);
+        line-height: 1.45;
+        color: var(--ink-2);
+        max-width: 58ch;
+        margin-top: 18px;
+      }
+
+      /* ---------- CHALLENGE (§1) ---------- */
+      .challenge-pull {
+        font-family: var(--display);
+        font-weight: 300;
+        font-size: clamp(32px, 4.4vw, 60px);
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        max-width: 20ch;
+        margin: 0 auto 72px;
+        text-align: center;
+      }
+      .challenge-pull em {
+        font-style: italic;
+        color: var(--vermillion);
+        font-weight: 300;
+      }
+      .challenge-pull .mute {
+        color: var(--ink-4);
+        font-style: italic;
+      }
+
+      .challenge-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        margin-bottom: 64px;
+      }
+      .challenge-stats .s {
+        padding: 32px 24px;
+        border-right: 1px solid var(--rule);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .challenge-stats .s:last-child {
+        border-right: 0;
+      }
+      .challenge-stats .s .v {
+        font-family: var(--display);
+        font-weight: 300;
+        font-size: clamp(32px, 3.8vw, 48px);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+      }
+      .challenge-stats .s .v em {
+        font-style: italic;
+        color: var(--vermillion);
+        font-weight: 300;
+      }
+      .challenge-stats .s .v .u {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 0.5em;
+        color: var(--ink-4);
+        margin-left: 4px;
+        font-weight: 400;
+      }
+      .challenge-stats .s .k {
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      .challenge-vocab {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+      .vocab {
+        padding: 0 28px 0 0;
+        border-right: 1px solid var(--rule);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .vocab:last-child {
+        border-right: 0;
+      }
+      .vocab + .vocab {
+        padding-left: 28px;
+      }
+      .vocab .kj {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: 13px;
+        color: var(--vermillion);
+        letter-spacing: 0;
+      }
+      .vocab .h {
+        font-family: var(--display);
+        font-size: 22px;
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.015em;
+        line-height: 1.1;
+      }
+      .vocab .b {
+        font-family: var(--text);
+        font-size: 12.5px;
+        color: var(--ink-3);
+        line-height: 1.55;
+        margin-top: 2px;
+      }
+
+      /* ---------- TASK (§2) single tier ---------- */
+      .task-card {
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 0;
+      }
+      .task-img {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        background: var(--paper-3);
+        border-right: 1px solid var(--rule);
+      }
+      .task-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .task-img .chip {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 6px 12px;
+        background: rgba(26, 22, 20, 0.85);
+        color: var(--paper);
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
+      }
+      .task-body {
+        padding: 36px 36px 32px;
+        display: flex;
+        flex-direction: column;
+      }
+      .task-kanji {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--vermillion);
+        letter-spacing: 0;
+        margin-bottom: 6px;
+      }
+      .task-name {
+        font-family: var(--display);
+        font-size: 40px;
+        font-weight: 400;
+        color: var(--ink);
+        line-height: 1.02;
+        letter-spacing: -0.025em;
+        margin-bottom: 14px;
+      }
+      .task-name em {
+        font-style: italic;
+        color: var(--vermillion);
+      }
+      .task-desc {
+        font-family: var(--text);
+        font-size: 14px;
+        color: var(--ink-3);
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .task-specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-top: 1px solid var(--rule);
+      }
+      .task-spec {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--rule);
+        padding-right: 12px;
+      }
+      .task-spec:nth-child(2n) {
+        padding-right: 0;
+        padding-left: 12px;
+        border-left: 1px solid var(--rule);
+      }
+      .task-spec .k {
+        font-family: var(--text);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-4);
+        margin-bottom: 4px;
+      }
+      .task-spec .v {
+        font-family: var(--display);
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.005em;
+      }
+
+      /* scoring note under task */
+      .scoring-note {
+        margin-top: 32px;
+        padding: 24px 28px;
+        border: 1px dashed var(--rule);
+        border-radius: 6px;
+        background: rgba(243, 236, 222, 0.5);
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 28px;
+        align-items: start;
+      }
+      .scoring-note .lbl {
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--vermillion);
+      }
+      .scoring-note .body {
+        font-family: var(--text);
+        font-size: 14px;
+        color: var(--ink-2);
+        line-height: 1.6;
+      }
+      .scoring-note .body strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .scoring-note .formula {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 18px;
+        color: var(--ink);
+        margin-top: 10px;
+      }
+      .scoring-note .formula em {
+        color: var(--vermillion);
+        font-style: italic;
+      }
+
+      /* ---------- RULES (under §1 Task) ---------- */
+      .rules-head {
+        margin-top: 56px;
+        margin-bottom: 20px;
+      }
+      .rules-label {
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--vermillion);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .rules-label::before {
+        content: '';
+        width: 20px;
+        height: 1px;
+        background: var(--vermillion);
+      }
+      .rules-lede {
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: 17px;
+        line-height: 1.45;
+        color: var(--ink-2);
+        max-width: 64ch;
+      }
+      .rules-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        margin-top: 16px;
+      }
+      .rules-grid .s {
+        padding: 24px 22px;
+        border-right: 1px solid var(--rule);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .rules-grid .s:last-child {
+        border-right: 0;
+      }
+      .rules-grid .s .k {
+        font-family: var(--text);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+      .rules-grid .s .v {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(20px, 2.2vw, 26px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+      .rules-grid .s .v em {
+        font-style: italic;
+        color: var(--vermillion);
+        font-weight: 400;
+      }
+      .rules-grid .s .v .u {
+        font-family: var(--display);
+        font-style: italic;
+        font-size: 0.55em;
+        color: var(--ink-4);
+        margin-left: 4px;
+        font-weight: 400;
+      }
+      .rules-grid .s .b {
+        font-family: var(--text);
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--ink-3);
+      }
+
+      .rules-flight {
+        position: relative;
+        margin-top: 24px;
+        padding-top: 78px;
+      }
+      .flight-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 96px;
+        pointer-events: none;
+        overflow: visible;
+      }
+      .flight-trail-path {
+        animation: flight-trail-flow 1.4s linear infinite;
+      }
+      @keyframes flight-trail-flow {
+        to {
+          stroke-dashoffset: -8;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .flight-trail-path {
+          animation: none;
+        }
+      }
+      .rules-punchline {
+        margin: 0;
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: clamp(18px, 1.8vw, 22px);
+        line-height: 1.4;
+        color: var(--ink-2);
+        text-align: center;
+      }
+      .rules-punchline em {
+        color: var(--vermillion);
+        font-style: italic;
+      }
+
+      /* ---------- RESOURCES (§3 now Resources) ---------- */
+      .resources {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 8px;
+      }
+      .res-card {
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        padding: 0 0 28px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition:
+          transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+          box-shadow 0.3s;
+      }
+      .res-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 32px -16px rgba(26, 22, 20, 0.2);
+      }
+      .res-card .media {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        background: #1a1614;
+        overflow: hidden;
+        border-bottom: 1px solid var(--rule);
+      }
+      .res-card .media video,
+      .res-card .media img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .res-card .media svg.illo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .res-card .media .illo-tag {
+        position: absolute;
+        left: 16px;
+        bottom: 14px;
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 300;
+        font-size: 14px;
+        color: rgba(243, 236, 222, 0.7);
+        letter-spacing: 0;
+      }
+      .res-card .media .illo-tag small {
+        display: block;
+        font-family: var(--text);
+        font-style: normal;
+        font-weight: 500;
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(243, 236, 222, 0.4);
+        margin-bottom: 4px;
+      }
+      .media-zoom {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        background: rgba(26, 22, 20, 0.55);
+        border: 1px solid rgba(243, 236, 222, 0.18);
+        color: rgba(243, 236, 222, 0.7);
+        border-radius: 999px;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition:
+          background 0.2s,
+          color 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+        z-index: 2;
+        padding: 0;
+      }
+      .media-zoom:hover {
+        background: rgba(26, 22, 20, 0.85);
+        color: var(--paper);
+        border-color: rgba(243, 236, 222, 0.4);
+        transform: scale(1.06);
+      }
+      .media-zoom svg {
+        width: 14px;
+        height: 14px;
+        display: block;
+      }
+
+      /* ---------- ZOOM MODAL ---------- */
+      .zoom-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+        background: rgba(10, 8, 7, 0.88);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        animation: zoomFadeIn 0.18s ease-out;
+      }
+      .zoom-modal.is-open {
+        display: flex;
+      }
+      .zoom-modal-stage {
+        position: relative;
+        width: min(1100px, 100%);
+        max-height: calc(100vh - 64px);
+        aspect-ratio: 4 / 3;
+        background: #1a1614;
+        border: 1px solid rgba(243, 236, 222, 0.2);
+        border-radius: 8px;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        padding: 4%;
+      }
+      .zoom-modal-stage svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .zoom-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        background: rgba(26, 22, 20, 0.7);
+        border: 1px solid rgba(243, 236, 222, 0.25);
+        color: var(--paper);
+        border-radius: 999px;
+        cursor: pointer;
+        z-index: 2;
+        padding: 0;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .zoom-close:hover {
+        background: var(--vermillion);
+        transform: rotate(90deg);
+      }
+      .zoom-close svg {
+        width: 14px;
+        height: 14px;
+      }
+      @keyframes zoomFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(1);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @media (max-width: 720px) {
+        .zoom-modal {
+          padding: 16px;
+        }
+        .zoom-modal-stage {
+          aspect-ratio: 4 / 3;
+          padding: 16px;
+        }
+        .media-zoom {
+          width: 30px;
+          height: 30px;
+          top: 10px;
+          right: 10px;
+        }
+      }
+      .res-card .body {
+        padding: 24px 26px 0;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .res-card .idx {
+        font-family: var(--display);
+        font-size: 13px;
+        font-style: italic;
+        color: var(--vermillion);
+        margin-bottom: 14px;
+        letter-spacing: 0;
+      }
+      .res-card h3 {
+        font-family: var(--display);
+        font-size: 24px;
+        font-weight: 400;
+        color: var(--ink);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+      }
+      .res-card h3 em {
+        font-style: italic;
+        color: var(--vermillion);
+      }
+      .res-card .partner {
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-4);
+        margin-bottom: 14px;
+      }
+      .res-card .desc {
+        font-family: var(--text);
+        font-size: 13px;
+        color: var(--ink-3);
+        line-height: 1.6;
+        margin-bottom: 18px;
+      }
+      .res-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-top: 1px solid var(--rule);
+      }
+      .res-card li {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--rule);
+        font-family: var(--text);
+        font-size: 13px;
+        color: var(--ink-2);
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+      }
+      .res-card li::before {
+        content: '—';
+        color: var(--vermillion);
+        font-family: var(--display);
+        font-style: italic;
+      }
+      .res-card .foot {
+        margin-top: auto;
+        padding-top: 16px;
+        font-family: var(--text);
+        font-size: 12px;
+        color: var(--ink-4);
+      }
+
+      /* ---------- VENUE ---------- */
+      .venue-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 48px;
+        align-items: start;
+      }
+      .venue-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .venue-info .row {
+        padding: 18px 0;
+        border-bottom: 1px solid var(--rule);
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 18px;
+        align-items: baseline;
+      }
+      .venue-info .row:first-child {
+        border-top: 1px solid var(--rule);
+      }
+      .venue-info .k {
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-4);
+      }
+      .venue-info .v {
+        font-family: var(--display);
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+      }
+      .venue-info .v small {
+        display: block;
+        font-family: var(--text);
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--ink-3);
+        margin-top: 4px;
+      }
+      .venue-visual {
+        aspect-ratio: 4 / 3;
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--paper-2);
+      }
+      .venue-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* ---------- ORGANIZERS ---------- */
+      .org-section-wrap {
+        position: relative;
+      }
+      .org-section-wrap::before {
+        content: '主';
+        position: absolute;
+        left: -20px;
+        top: -40px;
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: 280px;
+        color: var(--vermillion);
+        opacity: 0.04;
+        line-height: 0.8;
+        pointer-events: none;
+        user-select: none;
+        z-index: 0;
+      }
+      .org-intro {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 40px;
+        margin-bottom: 56px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--rule);
+        position: relative;
+        z-index: 1;
+      }
+      .org-intro .lede {
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: clamp(18px, 1.6vw, 22px);
+        line-height: 1.4;
+        color: var(--ink-2);
+        max-width: 48ch;
+      }
+      .org-intro .meta {
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-4);
+        text-align: right;
+        line-height: 1.6;
+      }
+      .org-intro .meta .v {
+        display: block;
+        font-family: var(--display);
+        font-size: 32px;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--vermillion);
+        letter-spacing: -0.02em;
+        margin-bottom: 4px;
+        text-transform: none;
+      }
+
+      .org-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--rule);
+        border-left: 1px solid var(--rule);
+      }
+      .org-card {
+        position: relative;
+        padding: 28px 28px 32px;
+        border-right: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        display: flex;
+        flex-direction: column;
+        background: var(--paper);
+        transition: background 0.3s;
+      }
+      .org-card:hover {
+        background: var(--paper-2);
+      }
+      .org-card .idx {
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+        font-size: 10px;
+        color: var(--ink-4);
+        letter-spacing: 0.1em;
+      }
+      .org-photo {
+        aspect-ratio: 4 / 5;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        background: var(--paper-2);
+        border: 1px solid var(--rule);
+        display: grid;
+        place-items: center;
+        margin-bottom: 22px;
+        width: 100%;
+      }
+      .org-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(0.15) contrast(1.05);
+        transition: filter 0.4s ease;
+      }
+      .org-card:hover .org-photo img {
+        filter: grayscale(0) contrast(1.05);
+      }
+      .org-photo.placeholder {
+        background: var(--paper-2);
+      }
+      .org-photo.placeholder::before {
+        content: attr(data-initials);
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 300;
+        font-size: 64px;
+        color: var(--ink-4);
+        letter-spacing: -0.03em;
+        z-index: 1;
+      }
+      .org-photo.placeholder::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent 0 14px,
+          rgba(26, 22, 20, 0.025) 14px 15px
+        );
+      }
+      .org-photo .corner {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 16px;
+        height: 16px;
+        border-top: 1px solid rgba(243, 236, 222, 0.7);
+        border-left: 1px solid rgba(243, 236, 222, 0.7);
+        pointer-events: none;
+      }
+      .org-photo .corner.br {
+        top: auto;
+        left: auto;
+        bottom: 10px;
+        right: 10px;
+        border-top: 0;
+        border-left: 0;
+        border-bottom: 1px solid rgba(243, 236, 222, 0.7);
+        border-right: 1px solid rgba(243, 236, 222, 0.7);
+      }
+      .org-name {
+        font-family: var(--display);
+        font-size: 19px;
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.015em;
+        line-height: 1.15;
+      }
+      .org-aff {
+        font-family: var(--text);
+        font-size: 12px;
+        color: var(--vermillion);
+        margin-top: 6px;
+        line-height: 1.4;
+        letter-spacing: 0.04em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .org-aff::before {
+        content: '';
+        width: 14px;
+        height: 1px;
+        background: var(--vermillion);
+        opacity: 0.6;
+      }
+      .org-aff:empty {
+        display: none;
+      }
+      .org-aff:empty::before {
+        display: none;
+      }
+
+      /* ---------- PARTNERS ---------- */
+      .partners-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--rule);
+        border-radius: 6px;
+        overflow: hidden;
+        max-width: 1160px;
+        margin: 0 auto;
+      }
+      .partner-cell {
+        aspect-ratio: 5 / 3;
+        display: grid;
+        place-items: center;
+        padding: 28px;
+        position: relative;
+        border-right: 1px solid var(--rule);
+        background: var(--paper);
+        transition: background 0.3s;
+      }
+      .partner-cell:hover {
+        background: var(--paper-2);
+      }
+      .partner-cell:last-child {
+        border-right: 0;
+      }
+      .partner-cell .lbl {
+        position: absolute;
+        top: 12px;
+        left: 14px;
+        font-family: var(--text);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-4);
+      }
+      .partner-cell .nm {
+        font-family: var(--display);
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--ink);
+        text-align: center;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+      }
+      .partner-cell.tba .nm {
+        color: var(--ink-4);
+        font-style: italic;
+        font-weight: 300;
+      }
+      .partner-cell .nm .jp {
+        display: inline-block;
+        margin-top: 4px;
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 300;
+        font-size: 13px;
+        color: var(--ink-4);
+        letter-spacing: 0;
+      }
+      /* logos render as-is by default; .invert flips lightness while preserving hue
+     (white text becomes dark, but coloured marks like the Lightwheel sphere
+     and the Sharpa red triangle keep their identity) */
+      .partner-cell img {
+        max-height: 38px;
+        max-width: 80%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+      .partner-cell.invert img {
+        filter: invert(1) hue-rotate(180deg);
+      }
+      .partner-cell.wide img {
+        max-height: 56px;
+        max-width: 90%;
+      }
+
+      /* ---------- FAQ ---------- */
+      .faq-list {
+        border-top: 1px solid var(--rule);
+      }
+      .faq-item {
+        border-bottom: 1px solid var(--rule);
+      }
+      .faq-q {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0;
+        cursor: pointer;
+        list-style: none;
+        font-family: var(--display);
+        font-size: 19px;
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+        transition: color 0.2s;
+      }
+      .faq-q::-webkit-details-marker {
+        display: none;
+      }
+      .faq-item[open] .faq-q {
+        color: var(--vermillion);
+      }
+      .faq-q .plus {
+        width: 16px;
+        height: 16px;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .faq-q .plus::before,
+      .faq-q .plus::after {
+        content: '';
+        position: absolute;
+        background: var(--ink-3);
+        transition:
+          transform 0.3s,
+          background 0.2s;
+      }
+      .faq-q .plus::before {
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+      }
+      .faq-q .plus::after {
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 1px;
+      }
+      .faq-item[open] .faq-q .plus::before {
+        background: var(--vermillion);
+      }
+      .faq-item[open] .faq-q .plus::after {
+        background: var(--vermillion);
+        transform: rotate(90deg);
+      }
+      .faq-a {
+        padding: 0 0 20px;
+        font-family: var(--text);
+        font-size: 14px;
+        color: var(--ink-2);
+        line-height: 1.6;
+        max-width: 68ch;
+      }
+
+      /* ---------- REGISTER ---------- */
+      .register-card {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 56px 48px;
+        border-radius: 6px;
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 48px;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .register-card::before {
+        content: '折';
+        position: absolute;
+        right: -40px;
+        bottom: -80px;
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 300;
+        font-size: 320px;
+        color: var(--sakura);
+        opacity: 0.05;
+        line-height: 1;
+        pointer-events: none;
+      }
+      .register-card h3 {
+        font-family: var(--display);
+        font-size: clamp(28px, 3vw, 40px);
+        line-height: 1.1;
+        color: var(--paper);
+        font-weight: 300;
+        letter-spacing: -0.025em;
+        margin-bottom: 16px;
+      }
+      .register-card h3 em {
+        color: var(--sakura);
+        font-style: italic;
+        font-weight: 300;
+      }
+      .register-card p {
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: 16px;
+        color: rgba(243, 236, 222, 0.78);
+        line-height: 1.55;
+      }
+      .register-cta {
+        display: inline-block;
+        margin-top: 24px;
+        text-decoration: none;
+        position: relative;
+        z-index: 2;
+      }
+      .badge-soon {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background: rgba(232, 180, 192, 0.12);
+        border: 1px solid rgba(232, 180, 192, 0.35);
+        color: var(--sakura);
+        font-family: var(--text);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        border-radius: 999px;
+        margin-bottom: 18px;
+      }
+      .badge-soon::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--sakura);
+      }
+      .contact-list {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 2;
+      }
+      .contact-row {
+        font-family: var(--text);
+        font-size: 13px;
+        color: rgba(243, 236, 222, 0.88);
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 14px;
+        align-items: baseline;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(243, 236, 222, 0.12);
+      }
+      .contact-row .k {
+        color: rgba(243, 236, 222, 0.45);
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-size: 10px;
+        font-weight: 500;
+      }
+
+      /* ---------- FOOTER ---------- */
+      footer {
+        background: var(--paper-2);
+        color: var(--ink-2);
+        padding: 52px 0 28px;
+        border-top: 1px solid var(--rule);
+        position: relative;
+        z-index: 3;
+      }
+      .footer-grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+      .footer-brand .wm {
+        font-family: var(--display);
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--ink);
+        letter-spacing: -0.015em;
+      }
+      .footer-brand .wm em {
+        color: var(--vermillion);
+        font-style: italic;
+      }
+      .footer-brand p {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 300;
+        font-size: 14px;
+        color: var(--ink-3);
+        margin-top: 8px;
+        max-width: 36ch;
+      }
+      .footer-links {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+      .footer-links h5 {
+        font-family: var(--text);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--vermillion);
+        margin-bottom: 12px;
+      }
+      .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .footer-links li a {
+        font-family: var(--text);
+        font-size: 13px;
+        color: var(--ink-2);
+        transition: color 0.2s;
+      }
+      .footer-links li a:hover {
+        color: var(--vermillion);
+      }
+      .footer-bottom {
+        margin-top: 44px;
+        padding-top: 20px;
+        border-top: 1px solid var(--rule);
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .footer-bottom .small {
+        font-family: var(--text);
+        font-size: 11px;
+        color: var(--ink-3);
+        letter-spacing: 0.02em;
+      }
+
+      /* ---------- RESPONSIVE ---------- */
+      @media (max-width: 960px) {
+        .wrap,
+        .wrap-narrow {
+          padding: 0 24px;
+        }
+        nav.top ul li:not(:last-child):not(.lang-switch) {
+          display: none;
+        }
+        .venue-grid,
+        .register-card,
+        .task-card {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .rules-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .rules-grid .s {
+          border-right: 1px solid var(--rule);
+          border-bottom: 1px solid var(--rule);
+        }
+        .rules-grid .s:nth-child(2n) {
+          border-right: 0;
+        }
+        .rules-grid .s:nth-last-child(-n + 1) {
+          border-bottom: 0;
+        }
+        .task-img {
+          border-right: 0;
+          border-bottom: 1px solid var(--rule);
+        }
+        .resources {
+          grid-template-columns: 1fr;
+        }
+        .org-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .partners-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .partners-grid .partner-cell:nth-child(2n) {
+          border-right: 0;
+        }
+        .partners-grid .partner-cell:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--rule);
+        }
+        section {
+          padding: 64px 0;
+        }
+        .hero {
+          padding: 72px 0 64px;
+        }
+        .register-card {
+          padding: 40px 28px;
+        }
+        .hero-meta {
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        .task-spec:nth-child(2n) {
+          border-left: 0;
+          padding-left: 0;
+        }
+      }
+
+      /* ---------- MOBILE (≤720px) ---------- */
+      @media (max-width: 720px) {
+        html, body {
+          font-size: 15px;
+        }
+        .wrap,
+        .wrap-narrow {
+          padding: 0 18px;
+        }
+
+        /* Nav — keep brand + register button visible, allow brand to shrink */
+        nav.top .row {
+          height: 56px;
+          gap: 12px;
+        }
+        .brand .wm {
+          font-size: 14px;
+        }
+        .brand .seal {
+          width: 26px;
+          height: 26px;
+          font-size: 13px;
+        }
+        nav.top ul {
+          gap: 0;
+        }
+        .btn-cta {
+          padding: 7px 14px;
+          font-size: 12px;
+        }
+
+        /* Hero — fit to small viewports */
+        .hero {
+          min-height: auto;
+          padding: 56px 0 56px;
+        }
+        .hero-content {
+          padding: 0 20px;
+        }
+        .hero-kanji-bg {
+          font-size: clamp(220px, 60vw, 360px);
+          right: -30px;
+        }
+        .hero-eyebrow {
+          white-space: normal;
+          flex-wrap: wrap;
+          justify-content: center;
+          row-gap: 6px;
+          padding: 8px 14px;
+          font-size: 11px;
+          margin-bottom: 24px;
+        }
+        h1.hero-title {
+          font-size: clamp(40px, 12vw, 64px);
+          line-height: 0.98;
+        }
+        .hero-sub {
+          font-size: 16px;
+          margin-top: 22px;
+          padding: 0 4px;
+        }
+        .hero-meta {
+          margin-top: 28px;
+          padding: 12px 18px;
+          font-size: 12px;
+          gap: 8px 14px;
+          justify-content: center;
+        }
+        .hero-cta-row {
+          margin-top: 28px;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+        }
+        .hero-cta-row a {
+          width: 100%;
+        }
+        .hero-cta-row .btn-primary,
+        .hero-cta-row .btn-ghost {
+          width: 100%;
+          padding: 14px 20px;
+          font-size: 14px;
+          white-space: normal;
+          line-height: 1.3;
+        }
+
+        /* Section spacing */
+        section {
+          padding: 48px 0;
+        }
+        .section-head {
+          margin-bottom: 32px;
+        }
+
+        /* Task card */
+        .task-body {
+          padding: 24px 22px 22px;
+        }
+        .task-name {
+          font-size: 30px;
+        }
+        .task-img {
+          aspect-ratio: 16 / 10;
+        }
+        .task-img .chip {
+          top: 12px;
+          left: 12px;
+          font-size: 10px;
+          padding: 5px 10px;
+        }
+        .scoring-note {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          padding: 20px 22px;
+        }
+
+        /* Rules + flight punchline */
+        .rules-head {
+          margin-top: 40px;
+        }
+        .rules-grid .s {
+          padding: 20px 18px;
+        }
+        .rules-flight {
+          padding-top: 64px;
+        }
+        .flight-svg {
+          height: 72px;
+        }
+
+        /* Resources */
+        .res-card .media {
+          aspect-ratio: 16 / 10;
+        }
+        .res-card .body {
+          padding: 22px 22px 0;
+        }
+        .res-card {
+          padding-bottom: 24px;
+        }
+
+        /* Organizers */
+        .org-section-wrap::before {
+          font-size: 180px;
+          left: -10px;
+          top: -20px;
+        }
+        .org-intro {
+          grid-template-columns: 1fr;
+          gap: 20px;
+          margin-bottom: 36px;
+          padding-bottom: 18px;
+        }
+        .org-intro .meta {
+          text-align: left;
+        }
+        .org-intro .meta .v {
+          font-size: 26px;
+        }
+        .org-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .org-card {
+          padding: 18px 18px 22px;
+        }
+        .org-card .idx {
+          top: 12px;
+          right: 14px;
+          font-size: 9px;
+        }
+        .org-photo {
+          margin-bottom: 16px;
+        }
+        .org-photo.placeholder::before {
+          font-size: 44px;
+        }
+        .org-name {
+          font-size: 17px;
+        }
+        .org-aff {
+          font-size: 11px;
+        }
+
+        /* Partners */
+        .partner-cell {
+          aspect-ratio: 4 / 3;
+          padding: 22px;
+        }
+        .partner-cell .nm {
+          font-size: 17px;
+        }
+        .partner-cell img {
+          max-height: 32px;
+        }
+        .partner-cell.wide img {
+          max-height: 44px;
+        }
+
+        /* FAQ */
+        .faq-q {
+          font-size: 16px;
+          padding: 16px 0;
+          gap: 14px;
+        }
+        .faq-a {
+          font-size: 13px;
+          padding-bottom: 18px;
+        }
+
+        /* Register */
+        .register-card {
+          padding: 32px 22px;
+        }
+        .register-card::before {
+          font-size: 220px;
+          right: -30px;
+          bottom: -50px;
+        }
+        .contact-row {
+          grid-template-columns: 60px 1fr;
+          gap: 10px;
+          padding: 10px 0;
+          font-size: 12px;
+        }
+        .contact-row .k {
+          font-size: 9px;
+        }
+
+        /* Footer */
+        footer {
+          padding: 40px 0 24px;
+        }
+        .footer-grid {
+          flex-direction: column;
+          gap: 28px;
+        }
+        .footer-links {
+          gap: 28px;
+        }
+        .footer-bottom {
+          margin-top: 32px;
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+
+      /* ---------- SMALL PHONE (≤480px) ---------- */
+      @media (max-width: 480px) {
+        .wrap,
+        .wrap-narrow {
+          padding: 0 16px;
+        }
+        .brand .wm {
+          font-size: 13px;
+        }
+        h1.hero-title {
+          font-size: clamp(34px, 11vw, 48px);
+        }
+        .hero-sub {
+          font-size: 15px;
+        }
+        .hero-meta {
+          flex-direction: column;
+          align-items: stretch;
+          padding: 12px 16px;
+          gap: 6px;
+        }
+        .hero-meta .sep {
+          display: none;
+        }
+        .hero-eyebrow .sep:nth-of-type(2) {
+          display: none;
+        }
+
+        /* Stack rules into a single column on tiny screens */
+        .rules-grid {
+          grid-template-columns: 1fr;
+        }
+        .rules-grid .s {
+          border-right: 0 !important;
+          border-bottom: 1px solid var(--rule);
+        }
+        .rules-grid .s:last-child {
+          border-bottom: 0;
+        }
+
+        /* Task specs single column */
+        .task-specs {
+          grid-template-columns: 1fr;
+        }
+        .task-spec {
+          border-bottom: 1px solid var(--rule);
+          padding: 12px 0;
+          padding-right: 0;
+        }
+        .task-spec:last-child {
+          border-bottom: 0;
+        }
+
+        /* Organizers — single column for readability */
+        .org-grid {
+          grid-template-columns: 1fr;
+        }
+        .org-photo {
+          aspect-ratio: 4 / 3;
+        }
+
+        .partners-grid {
+          grid-template-columns: 1fr;
+        }
+        .partner-cell {
+          border-right: 0 !important;
+          aspect-ratio: 5 / 2;
+        }
+        .partner-cell:last-child {
+          border-bottom: 0;
+        }
+
+        .section-label {
+          font-size: 10px;
+        }
+        h2.section-title {
+          font-size: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="top">
+      <div class="wrap row">
+        <a href="#top" class="brand">
+          <span class="seal">折</span>
+          <span class="wm" data-i18n="brand"
+            >Robotic <em>Origami</em> Challenge</span
+          >
+        </a>
+        <ul>
+          <li><a href="#task" data-i18n="nav.task">Task</a></li>
+          <li>
+            <a href="#resources" data-i18n="nav.resources">Resources</a>
+          </li>
+          <li>
+            <a href="#organizers" data-i18n="nav.organizers"
+              >Organizers</a
+            >
+          </li>
+          <li>
+            <a href="#partners" data-i18n="nav.partners">Partners</a>
+          </li>
+          <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+          <li class="lang-switch">
+            <select
+              id="langSelect"
+              aria-label="Language"
+              class="lang-select"
+            >
+              <option value="en">EN</option>
+              <option value="ja">日本語</option>
+            </select>
+          </li>
+          <li>
+            <a
+              href="https://forms.gle/wchFyv3kjzbvxmJZ9"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><button class="btn-cta" data-i18n="nav.register">
+                Register
+              </button></a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="top" class="hero">
+      <div class="hero-bg">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="assets/hero/hero1.png"
+        >
+          <source src="assets/hero/sharpa.mp4" type="video/mp4" />
+        </video>
+        <div class="scrim"></div>
+      </div>
+      <div class="hero-kanji-bg" aria-hidden="true">折</div>
+
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span data-i18n="hero.eyebrow.iros"
+            >IROS 2026 · Pittsburgh</span
+          >
+          <span class="sep">·</span>
+          <span class="kj">折紙</span>
+          <span class="sep">·</span>
+          <span data-i18n="hero.eyebrow.edition">First Edition</span>
+        </div>
+
+        <h1 class="hero-title" data-i18n="hero.title">
+          The Robotic <em>Origami</em> Challenge
+        </h1>
+
+        <p class="hero-sub" data-i18n="hero.sub">
+          A competition benchmarking dexterous robotic hands on
+          fine-motor, sequential paper manipulation — against expert
+          artists from the Nippon Origami Association (日本折紙協会).
+        </p>
+
+        <div class="hero-meta">
+          <span
+            ><strong data-i18n="hero.meta.dates"
+              >Sep 27 — Oct 1, 2026</strong
+            ></span
+          >
+          <span class="sep">·</span>
+          <span data-i18n="hero.meta.venue"
+            >David L. Lawrence Convention Center</span
+          >
+          <span class="sep">·</span>
+          <span data-i18n="hero.meta.city">Pittsburgh, PA</span>
+        </div>
+
+        <div class="hero-cta-row">
+          <a
+            href="https://forms.gle/wchFyv3kjzbvxmJZ9"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><button class="btn-primary" data-i18n="hero.cta.register">
+              Register Now for the Robotic Origami Challenge 2026 →
+            </button></a
+          >
+          <a href="#task"
+            ><button class="btn-ghost" data-i18n="hero.cta.rules">
+              Read the rules
+            </button></a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- §1 TASK (single tier — paper airplane) -->
+    <section id="task">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">
+            <span data-i18n="task.section_label">§ 01 · The Task</span>
+            <span class="kanji">紙飛行機</span>
+          </div>
+          <h2 class="section-title" data-i18n="task.title">
+            Fold <em>a paper airplane.</em> One figure, every team.
+          </h2>
+          <p class="section-lede" data-i18n="task.lede">
+            Traditional <em>kami hikōki</em> — a classic 4–6 fold
+            airplane curated by the Nippon Origami Association
+            (日本折紙協会).
+          </p>
+        </div>
+
+        <div class="task-card">
+          <div class="task-img">
+            <span class="chip" data-i18n="task.chip">Target figure</span>
+            <img
+              src="assets/hero/hero6.png"
+              alt="A traditional paper airplane — the target figure for IROS 2026"
+            />
+          </div>
+          <div class="task-body">
+            <div class="task-kanji">紙飛行機 · kami hikōki</div>
+            <h3 class="task-name" data-i18n="task.card_name">
+              The <em>Paper Airplane</em>
+            </h3>
+            <p class="task-desc" data-i18n="task.card_desc">
+              A traditional Japanese paper airplane — 4 to 6 folds
+              depending on the variant chosen by the team. Judged on
+              crease accuracy, structural fidelity, symmetry, and
+              paper integrity.
+            </p>
+
+            <div class="task-specs">
+              <div class="task-spec">
+                <div class="k" data-i18n="task.spec.paper_k">
+                  Default paper
+                </div>
+                <div class="v" data-i18n="task.spec.paper_v">
+                  15 × 15 cm
+                </div>
+              </div>
+              <div class="task-spec">
+                <div class="k" data-i18n="task.spec.weight_k">
+                  Default weight
+                </div>
+                <div class="v" data-i18n="task.spec.weight_v">
+                  ≥ 60 gsm
+                </div>
+              </div>
+              <div class="task-spec">
+                <div class="k" data-i18n="task.spec.folds_k">Folds</div>
+                <div class="v" data-i18n="task.spec.folds_v">4 — 6</div>
+              </div>
+              <div class="task-spec">
+                <div class="k" data-i18n="task.spec.score_k">
+                  Scored on
+                </div>
+                <div class="v" data-i18n="task.spec.score_v">
+                  Folding time
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-head">
+          <div class="rules-label" data-i18n="rules.label">
+            The Rules
+          </div>
+          <p class="rules-lede" data-i18n="rules.lede">
+            Judged by an Origami Grand Master from the Nippon Origami
+            Association. Their craft is the rubric.
+          </p>
+        </div>
+
+        <div class="rules-grid">
+          <div class="s">
+            <div class="k" data-i18n="rules.success_k">
+              Success / Failed
+            </div>
+            <div class="v" data-i18n="rules.success_v">
+              Pass <em>or</em> fail
+            </div>
+            <div class="b" data-i18n="rules.success_b">
+              The judge panel declares whether you folded a
+              recognizable airplane.
+            </div>
+          </div>
+          <div class="s">
+            <div class="k" data-i18n="rules.time_k">Time limit</div>
+            <div class="v" data-i18n="rules.time_v">
+              <em>10</em> min<span class="u">/attempt</span>
+            </div>
+            <div class="b" data-i18n="rules.time_b">
+              Exceeding the limit is an automatic fail.
+            </div>
+          </div>
+          <div class="s">
+            <div class="k" data-i18n="rules.judge_k">Judged by</div>
+            <div class="v" data-i18n="rules.judge_v">
+              Origami <em>Grand Master</em>
+            </div>
+            <div class="b" data-i18n="rules.judge_b">
+              From the Nippon Origami Association (日本折紙協会).
+            </div>
+          </div>
+          <div class="s">
+            <div class="k" data-i18n="rules.score_k">
+              Scoring criterion
+            </div>
+            <div class="v" data-i18n="rules.score_v">
+              Folding <em>time</em>
+            </div>
+            <div class="b" data-i18n="rules.score_b">
+              Faster successful folds rank higher.
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-flight">
+          <svg
+            class="flight-svg"
+            viewBox="0 0 800 120"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path
+              id="flightPath"
+              d="M -20 105 Q 180 10, 400 55 T 820 30"
+              fill="none"
+              stroke="var(--vermillion)"
+              stroke-width="1.25"
+              stroke-dasharray="3 5"
+              stroke-linecap="round"
+              opacity="0.55"
+              class="flight-trail-path"
+            />
+            <g class="flight-plane">
+              <path
+                d="M -10 -3 L 14 0 L -2 2 L 14 0 L 4 7 L -2 2 Z"
+                fill="none"
+                stroke="var(--vermillion)"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              />
+              <animateMotion
+                dur="6.5s"
+                repeatCount="indefinite"
+                rotate="auto"
+              >
+                <mpath href="#flightPath" />
+              </animateMotion>
+            </g>
+          </svg>
+          <p class="rules-punchline" data-i18n="rules.punchline">
+            And if the plane actually <em>flies</em> — extra points.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- §3 RESOURCES -->
+    <section id="resources">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">
+            <span data-i18n="resources.section_label"
+              >§ 02 · Resources</span
+            >
+            <span class="kanji">資源</span>
+          </div>
+          <h2 class="section-title" data-i18n="resources.title">
+            What we <em>provide</em> to every team.
+          </h2>
+          <p class="section-lede" data-i18n="resources.lede">
+            Three things, released to all registered teams — so the
+            barrier to entry is policy, not logistics.
+          </p>
+        </div>
+
+        <div class="resources">
+          <!-- 1. Datasets -->
+          <div class="res-card">
+            <div class="media">
+              <!-- Traditional 6-step paper-airplane fold sequence. -->
+              <svg
+                class="illo"
+                viewBox="0 0 400 300"
+                preserveAspectRatio="xMidYMid slice"
+                aria-hidden="true"
+              >
+                <!-- Step numbers (prominent, vermillion) -->
+                <g
+                  font-family="ui-monospace, monospace"
+                  font-size="13"
+                  font-weight="500"
+                  fill="#C8372D"
+                  letter-spacing="0.5"
+                >
+                  <text x="22" y="22">01</text>
+                  <text x="152" y="22">02</text>
+                  <text x="282" y="22">03</text>
+                  <text x="22" y="162">04</text>
+                  <text x="152" y="162">05</text>
+                  <text x="282" y="162">06</text>
+                </g>
+
+                <!-- Step descriptions (plain English, all caps for legibility) -->
+                <g
+                  font-family="ui-monospace, monospace"
+                  font-size="8.5"
+                  fill="rgba(243,236,222,0.65)"
+                  letter-spacing="0.6"
+                >
+                  <text x="22" y="125" data-i18n="fold.step1">CREASE IN HALF</text>
+                  <text x="152" y="125" data-i18n="fold.step2">CORNERS IN</text>
+                  <text x="282" y="125" data-i18n="fold.step3">SIDES TO CENTER</text>
+                  <text x="22" y="265" data-i18n="fold.step4">FOLD IN HALF</text>
+                  <text x="152" y="265" data-i18n="fold.step5">FOLD WINGS</text>
+                  <text x="282" y="265" data-i18n="fold.step6">OPEN WINGS</text>
+                </g>
+
+                <!-- 01 · square sheet, valley centerline crease -->
+                <g
+                  transform="translate(35, 32)"
+                  stroke="#F3ECDE"
+                  stroke-width="1.5"
+                  fill="none"
+                >
+                  <rect x="0" y="0" width="70" height="70" />
+                  <line
+                    x1="35"
+                    y1="-3"
+                    x2="35"
+                    y2="73"
+                    stroke="#C8372D"
+                    stroke-width="1.3"
+                    stroke-dasharray="3 2"
+                  />
+                </g>
+
+                <!-- 02 · top corners fold inward to centerline -->
+                <g
+                  transform="translate(165, 32)"
+                  stroke="#F3ECDE"
+                  stroke-width="1.5"
+                  fill="none"
+                >
+                  <rect x="0" y="0" width="70" height="70" />
+                  <line
+                    x1="35"
+                    y1="0"
+                    x2="35"
+                    y2="70"
+                    stroke="rgba(243,236,222,0.25)"
+                    stroke-width="1"
+                    stroke-dasharray="1 2"
+                  />
+                  <line
+                    x1="35"
+                    y1="0"
+                    x2="0"
+                    y2="35"
+                    stroke="#C8372D"
+                    stroke-width="1.3"
+                    stroke-dasharray="3 2"
+                  />
+                  <line
+                    x1="35"
+                    y1="0"
+                    x2="70"
+                    y2="35"
+                    stroke="#C8372D"
+                    stroke-width="1.3"
+                    stroke-dasharray="3 2"
+                  />
+                  <!-- inward fold motion arrows -->
+                  <g
+                    stroke="rgba(200,55,45,0.7)"
+                    stroke-width="1.1"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M 8 8 Q 18 18, 22 26 M 18 22 L 22 26 L 26 22" />
+                    <path d="M 62 8 Q 52 18, 48 26 M 44 22 L 48 26 L 52 22" />
+                  </g>
+                </g>
+
+                <!-- 03 · house pentagon, narrow-nose valley folds inward -->
+                <g
+                  transform="translate(295, 32)"
+                  stroke="#F3ECDE"
+                  stroke-width="1.5"
+                  fill="none"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M 35 0 L 70 35 L 70 70 L 0 70 L 0 35 Z"
+                    fill="rgba(243,236,222,0.05)"
+                  />
+                  <line
+                    x1="35"
+                    y1="0"
+                    x2="35"
+                    y2="70"
+                    stroke="rgba(243,236,222,0.25)"
+                    stroke-width="1"
+                    stroke-dasharray="1 2"
+                  />
+                  <line
+                    x1="35"
+                    y1="0"
+                    x2="17"
+                    y2="35"
+                    stroke="#C8372D"
+                    stroke-width="1.3"
+                    stroke-dasharray="3 2"
+                  />
+                  <line
+                    x1="35"
+                    y1="0"
+                    x2="53"
+                    y2="35"
+                    stroke="#C8372D"
+                    stroke-width="1.3"
+                    stroke-dasharray="3 2"
+                  />
+                </g>
+
+                <!-- arrows between row-1 cells -->
+                <g
+                  stroke="rgba(200,55,45,0.6)"
+                  stroke-width="1.2"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M 110 67 L 158 67 M 154 63 L 158 67 L 154 71"
+                  />
+                  <path
+                    d="M 240 67 L 288 67 M 284 63 L 288 67 L 284 71"
+                  />
+                </g>
+
+                <!-- 04 · narrow-nose pentagon, mountain centerline (fold in half) -->
+                <g
+                  transform="translate(35, 172)"
+                  stroke="#F3ECDE"
+                  stroke-width="1.5"
+                  fill="none"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M 35 0 L 53 35 L 70 70 L 0 70 L 17 35 Z"
+                    fill="rgba(243,236,222,0.05)"
+                  />
+                  <!-- mountain fold: dash-dot pattern -->
+                  <line
+                    x1="35"
+                    y1="-3"
+                    x2="35"
+                    y2="73"
+                    stroke="#C8372D"
+                    stroke-width="1.3"
+                    stroke-dasharray="6 2 1 2"
+                  />
+                  <!-- fold-in-half motion arrow -->
+                  <g
+                    stroke="rgba(200,55,45,0.7)"
+                    stroke-width="1.1"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M 8 35 Q 22 22, 30 28 M 26 24 L 30 28 L 30 32" />
+                  </g>
+                </g>
+
+                <!-- 05 · side profile after half-fold; wing-fold valley -->
+                <g
+                  transform="translate(165, 172)"
+                  stroke="#F3ECDE"
+                  stroke-width="1.5"
+                  fill="none"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M 5 65 L 65 25 L 65 65 Z"
+                    fill="rgba(243,236,222,0.05)"
+                  />
+                  <line
+                    x1="65"
+                    y1="25"
+                    x2="65"
+                    y2="65"
+                    stroke="rgba(243,236,222,0.3)"
+                    stroke-width="1"
+                    stroke-dasharray="1 2"
+                  />
+                  <line
+                    x1="12"
+                    y1="60"
+                    x2="65"
+                    y2="42"
+                    stroke="#C8372D"
+                    stroke-width="1.3"
+                    stroke-dasharray="3 2"
+                  />
+                </g>
+
+                <!-- 06 · final dart shape (top-down view, wings open) -->
+                <g
+                  transform="translate(295, 172)"
+                  stroke="#F3ECDE"
+                  stroke-width="1.5"
+                  fill="none"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                >
+                  <path d="M 5 35 L 60 5 L 38 35 L 60 65 Z" />
+                  <line
+                    x1="5"
+                    y1="35"
+                    x2="38"
+                    y2="35"
+                    stroke="rgba(243,236,222,0.4)"
+                    stroke-width="1"
+                    stroke-dasharray="1 2"
+                  />
+                </g>
+
+                <!-- arrows between row-2 cells -->
+                <g
+                  stroke="rgba(200,55,45,0.6)"
+                  stroke-width="1.2"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M 110 207 L 158 207 M 154 203 L 158 207 L 154 211"
+                  />
+                  <path
+                    d="M 240 207 L 288 207 M 284 203 L 288 207 L 284 211"
+                  />
+                </g>
+
+              </svg>
+              <button
+                type="button"
+                class="media-zoom"
+                aria-label="Open larger view"
+                data-zoom-target="fold-diagram"
+              >
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="body">
+              <div class="idx">01 · 資料</div>
+              <h3 data-i18n="res.dataset.title">Teleop datasets</h3>
+              <p class="desc" data-i18n="res.dataset.desc">
+                500+ episodes of teleoperation demonstrations
+                collected on the target folding sequence.
+              </p>
+              <ul>
+                <li data-i18n="res.dataset.li1">
+                  Human teleoperation demonstrations (500+ episodes)
+                </li>
+                <li data-i18n="res.dataset.li2">
+                  Fold-sequence diagrams
+                </li>
+                <li data-i18n="res.dataset.li3">
+                  Reference example folds
+                </li>
+              </ul>
+              <div class="foot">
+                <a
+                  href="#"
+                  class="btn-cta btn-disabled"
+                  aria-disabled="true"
+                  tabindex="-1"
+                  data-i18n="res.dataset.cta"
+                  >Coming soon</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Simulation -->
+          <div class="res-card">
+            <div class="media">
+              <!-- Placeholder illustration: simulated paper airplane in a wireframe envelope. -->
+              <svg
+                class="illo"
+                viewBox="0 0 400 300"
+                preserveAspectRatio="xMidYMid slice"
+                aria-hidden="true"
+              >
+                <defs>
+                  <pattern
+                    id="grid-sim"
+                    width="20"
+                    height="20"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <path
+                      d="M 20 0 L 0 0 0 20"
+                      fill="none"
+                      stroke="rgba(243,236,222,0.06)"
+                      stroke-width="1"
+                    />
+                  </pattern>
+                </defs>
+                <rect
+                  width="400"
+                  height="300"
+                  fill="url(#grid-sim)"
+                />
+                <line
+                  x1="0"
+                  y1="200"
+                  x2="400"
+                  y2="200"
+                  stroke="rgba(243,236,222,0.12)"
+                  stroke-width="1"
+                />
+                <g
+                  stroke="#F3ECDE"
+                  stroke-width="1.25"
+                  fill="none"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                >
+                  <path
+                    d="M 90 165 L 310 110 L 230 145 L 310 110 L 250 175 L 230 145 L 200 200 L 230 145 L 90 165"
+                  />
+                  <path d="M 90 165 L 200 200" opacity="0.5" />
+                  <path d="M 230 145 L 250 175" opacity="0.6" />
+                </g>
+                <g
+                  stroke="#C8372D"
+                  stroke-width="1"
+                  fill="none"
+                  opacity="0.85"
+                >
+                  <path
+                    d="M 310 110 L 200 200"
+                    stroke-dasharray="3 3"
+                  />
+                  <path
+                    d="M 310 110 L 230 145"
+                    stroke-dasharray="1 3"
+                  />
+                </g>
+                <g fill="#C8372D">
+                  <circle cx="310" cy="110" r="2.5" />
+                  <circle cx="90" cy="165" r="2.5" />
+                  <circle cx="200" cy="200" r="2.5" />
+                  <circle cx="230" cy="145" r="2" />
+                  <circle cx="250" cy="175" r="2" />
+                </g>
+              </svg>
+              <button
+                type="button"
+                class="media-zoom"
+                aria-label="Open larger view"
+                data-zoom-target="sim-illustration"
+              >
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="body">
+              <div class="idx">02 · 模擬</div>
+              <h3 data-i18n="res.sim.title">
+                Simulation <em>environment</em>
+              </h3>
+              <p class="desc" data-i18n="res.sim.desc">
+                A high-fidelity sim built on NVIDIA Isaac Sim, with
+                the paper physics and hand kinematics you need to
+                train a folding policy end-to-end.
+              </p>
+              <ul>
+                <li data-i18n="res.sim.li1">
+                  Thin-shell paper physics with plastic creasing and
+                  fold memory
+                </li>
+                <li data-i18n="res.sim.li2">
+                  Digital twins of every partner robotic hand
+                </li>
+                <li data-i18n="res.sim.li3">
+                  Representative paper-airplane task setups
+                </li>
+                <li data-i18n="res.sim.li4">
+                  Same scoring rubric as the live event
+                </li>
+              </ul>
+              <div class="foot" data-i18n="res.sim.foot">
+                Released ahead of the event · standardised across all
+                teams.
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Real-World Eval -->
+          <div class="res-card">
+            <div class="media">
+              <!-- Placeholder illustration: remote eval rig (arm + hand + paper on a workstation). -->
+              <svg
+                class="illo"
+                viewBox="0 0 400 300"
+                preserveAspectRatio="xMidYMid slice"
+                aria-hidden="true"
+              >
+                <line
+                  x1="0"
+                  y1="220"
+                  x2="400"
+                  y2="220"
+                  stroke="rgba(243,236,222,0.25)"
+                  stroke-width="1"
+                />
+                <line
+                  x1="0"
+                  y1="222"
+                  x2="400"
+                  y2="222"
+                  stroke="rgba(243,236,222,0.08)"
+                  stroke-width="1"
+                />
+                <g
+                  stroke="#F3ECDE"
+                  stroke-width="1.5"
+                  fill="none"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                >
+                  <rect
+                    x="290"
+                    y="210"
+                    width="60"
+                    height="14"
+                    rx="2"
+                  />
+                  <line x1="320" y1="210" x2="320" y2="190" />
+                  <circle cx="320" cy="186" r="6" />
+                  <line x1="320" y1="186" x2="245" y2="120" />
+                  <circle cx="245" cy="120" r="5" />
+                  <line x1="245" y1="120" x2="180" y2="155" />
+                  <circle cx="180" cy="155" r="4" />
+                  <path
+                    d="M 180 155 L 160 175 M 180 155 L 152 168 M 180 155 L 158 162"
+                  />
+                  <path
+                    d="M 160 175 L 152 188 M 152 168 L 142 178 M 158 162 L 148 168"
+                    opacity="0.7"
+                  />
+                </g>
+                <g
+                  stroke="#C8372D"
+                  stroke-width="1.25"
+                  fill="rgba(200,55,45,0.06)"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M 110 218 L 175 200 L 195 215 L 165 230 Z"
+                  />
+                  <path
+                    d="M 175 200 L 165 230"
+                    stroke-dasharray="3 3"
+                    fill="none"
+                  />
+                </g>
+                <g
+                  stroke="rgba(243,236,222,0.5)"
+                  stroke-width="1"
+                  fill="none"
+                >
+                  <circle cx="100" cy="80" r="10" />
+                  <circle
+                    cx="100"
+                    cy="80"
+                    r="4"
+                    fill="rgba(243,236,222,0.2)"
+                  />
+                  <line x1="100" y1="90" x2="100" y2="220" />
+                  <line x1="100" y1="220" x2="80" y2="240" />
+                  <line x1="100" y1="220" x2="120" y2="240" />
+                </g>
+                <line
+                  x1="100"
+                  y1="90"
+                  x2="80"
+                  y2="200"
+                  stroke="rgba(200,55,45,0.35)"
+                  stroke-dasharray="2 4"
+                />
+                <line
+                  x1="100"
+                  y1="90"
+                  x2="220"
+                  y2="210"
+                  stroke="rgba(200,55,45,0.35)"
+                  stroke-dasharray="2 4"
+                />
+              </svg>
+              <button
+                type="button"
+                class="media-zoom"
+                aria-label="Open larger view"
+                data-zoom-target="eval-illustration"
+              >
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="body">
+              <div class="idx">03 · 評価</div>
+              <h3 data-i18n="res.eval.title">
+                Real-World <em>Eval</em>
+              </h3>
+              <div class="partner">Sharpa Hands</div>
+              <p class="desc" data-i18n="res.eval.desc">
+                A remote real-world lab where teams upload policies
+                and run them on the same arms + Sharpa Hands rig that
+                ships to Pittsburgh.
+              </p>
+              <ul>
+                <li data-i18n="res.eval.li1">
+                  Bimanual arms paired with Sharpa Hands dexterous
+                  end-effectors
+                </li>
+                <li data-i18n="res.eval.li2">
+                  Identical rig in sim, remote eval, and on-site
+                </li>
+                <li data-i18n="res.eval.li3">
+                  Upload a policy, queue an eval, get scored
+                </li>
+                <li data-i18n="res.eval.li4">
+                  Lowers the barrier — no shipping robots to
+                  Pittsburgh
+                </li>
+              </ul>
+              <div class="foot" data-i18n="res.eval.foot">
+                Bookable through the team portal ahead of the event.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §4 ORGANIZERS -->
+    <section id="organizers">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">
+            <span data-i18n="organizers.section_label"
+              >§ 03 · Organizers</span
+            >
+            <span class="kanji">主催</span>
+          </div>
+          <h2 class="section-title" data-i18n="organizers.title">
+            The organizing committee.
+          </h2>
+        </div>
+
+        <div class="org-section-wrap">
+          <div class="org-intro">
+            <p class="lede" data-i18n="organizers.lede">
+              A coalition across robotics labs, simulation, and
+              origami practice — assembled to make a fair,
+              reproducible, well-judged competition.
+            </p>
+            <div class="meta">
+              <span class="v">08</span>
+              <span data-i18n="organizers.count_label"
+                >Co-organizers</span
+              >
+            </div>
+          </div>
+          <div class="org-grid" id="org-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §6 PARTNERS -->
+    <section id="partners">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">
+            <span data-i18n="partners.section_label"
+              >§ 04 · Partners</span
+            >
+            <span class="kanji">協力</span>
+          </div>
+          <h2 class="section-title" data-i18n="partners.title">
+            Made possible by.
+          </h2>
+        </div>
+
+        <div class="partners-grid">
+          <div class="partner-cell">
+            <div class="lbl" data-i18n="partners.host">Host</div>
+            <img src="assets/partners/bitrobot.png" alt="BitRobot" />
+          </div>
+          <div class="partner-cell wide">
+            <div class="lbl" data-i18n="partners.experts">
+              Human Experts
+            </div>
+            <img
+              src="assets/partners/nippon-origami-association.png?v=2"
+              alt="Nippon Origami Association (日本折紙協会)"
+            />
+          </div>
+          <div class="partner-cell invert">
+            <div class="lbl" data-i18n="partners.hardware">Hardware</div>
+            <img
+              src="assets/partners/sharpa.png"
+              alt="Sharpa Hands"
+            />
+          </div>
+          <div class="partner-cell invert">
+            <div class="lbl" data-i18n="partners.simulation">
+              Simulation
+            </div>
+            <img
+              src="assets/partners/lightwheel.png"
+              alt="Lightwheel"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §7 FAQ -->
+    <section id="faq">
+      <div class="wrap-narrow">
+        <div class="section-head">
+          <div class="section-label">
+            <span data-i18n="faq.section_label">§ 05 · FAQ</span>
+            <span class="kanji">問答</span>
+          </div>
+          <h2 class="section-title" data-i18n="faq.title">
+            Frequently asked.
+          </h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary class="faq-q">
+              <span data-i18n="faq.q1.q">What exactly do we fold?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q1.a">
+              A traditional Japanese paper airplane (<em
+                >kami hikōki</em
+              >), 4 to 6 folds depending on the variant. Every team
+              folds the same target figure.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q2.q"
+                >How is scoring calculated?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q2.a">
+              An Origami Grand Master from the Nippon Origami
+              Association judges each attempt as a successful fold or
+              a failed one, then ranks the successful submissions by
+              folding time — faster successful folds rank higher. Each
+              attempt is capped at 10 minutes. The plane actually
+              flying is a bonus, not part of the formal rubric.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q3.q"
+                >Do I need to bring my own robotic hand?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q3.a">
+              No. The competition provides a standardized rig —
+              bimanual arms paired with Sharpa Hands — both in the
+              remote eval lab and on-site at IROS.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q4.q"
+                >When does registration open?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q4.a">
+              Early 2026. Complete the form below — we'll notify you
+              when registration opens, alongside sim and remote-lab
+              access.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q5.q"
+                >Can I train in simulation first?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q5.a">
+              Yes. Registered teams receive the Lightwheel simulation
+              environment ahead of the event, with paper-deformation
+              physics, digital twins of partner hands, and the exact
+              scoring rubric.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q6.q"
+                >Is there a remote evaluation option?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q6.a">
+              Yes. Upload policies to our remote lab for real-world
+              inference on the same arms + Sharpa Hands rig that will
+              be on the IROS floor — without shipping robots to
+              Pittsburgh.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q7.q">Who judges?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q7.a">
+              A mixed panel of Nippon Origami Association
+              (日本折紙協会) representatives and robotics researchers.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q8.q"
+                >Open to industry teams?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q8.a">
+              Yes — academic and industrial teams alike. We expect
+              strong representation from groups developing next-gen
+              dexterous hands and manipulation policies.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-q">
+              <span data-i18n="faq.q9.q"
+                >How can I partner or sponsor?</span
+              ><span class="plus"></span>
+            </summary>
+            <div class="faq-a" data-i18n="faq.q9.a">
+              Reach out below. We're particularly interested in
+              additional dexterous-hand platforms and judging-rubric
+              contributors.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-label">
+            <span data-i18n="register.section_label"
+              >§ 06 · Registration</span
+            >
+            <span class="kanji">登録</span>
+          </div>
+          <h2 class="section-title" data-i18n="register.title">
+            Be the first <em>to fold.</em>
+          </h2>
+        </div>
+
+        <div class="register-card">
+          <div>
+            <div class="badge-soon" data-i18n="register.badge">
+              Registration opens soon
+            </div>
+            <h3 data-i18n="register.heading">
+              Complete the form and we'll notify you when
+              <em>everything goes live</em> — sim, remote lab,
+              registration.
+            </h3>
+            <p data-i18n="register.body">
+              Tell us about your team. We'll be in touch with
+              simulation access, the figure spec, and the
+              call-for-teams when it opens.
+            </p>
+            <a
+              href="https://forms.gle/wchFyv3kjzbvxmJZ9"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary register-cta"
+              data-i18n="register.cta"
+              >Open the form →</a
+            >
+          </div>
+          <div class="contact-list">
+            <div class="contact-row">
+              <span class="k" data-i18n="register.contact.email"
+                >email</span
+              ><span>organizers@robotic-origami-challenge.org</span>
+            </div>
+            <div class="contact-row">
+              <span class="k" data-i18n="register.contact.updates"
+                >updates</span
+              ><span>@RoboticOrigami</span>
+            </div>
+            <div class="contact-row">
+              <span class="k" data-i18n="register.contact.press"
+                >press</span
+              ><span>press@robotic-origami-challenge.org</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="wm" data-i18n="footer.brand">
+              Robotic <em>Origami</em> Challenge
+            </div>
+            <p data-i18n="footer.tag">
+              IROS 2026 — dexterous manipulation benchmarked against
+              traditional Japanese origami.
+            </p>
+          </div>
+          <div class="footer-links">
+            <div>
+              <h5 data-i18n="footer.col.program">Program</h5>
+              <ul>
+                <li>
+                  <a href="#task" data-i18n="nav.task">Task</a>
+                </li>
+                <li>
+                  <a href="#resources" data-i18n="nav.resources"
+                    >Resources</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h5 data-i18n="footer.col.event">Event</h5>
+              <ul>
+                <li>
+                  <a href="#organizers" data-i18n="nav.organizers"
+                    >Organizers</a
+                  >
+                </li>
+                <li>
+                  <a href="#partners" data-i18n="nav.partners"
+                    >Partners</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h5 data-i18n="footer.col.contact">Contact</h5>
+              <ul>
+                <li>
+                  <a
+                    href="https://forms.gle/wchFyv3kjzbvxmJZ9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-i18n="nav.register"
+                    >Register</a
+                  >
+                </li>
+                <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+                <li>
+                  <a
+                    href="mailto:organizers@robotic-origami-challenge.org"
+                    data-i18n="footer.email"
+                    >Email</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="small" data-i18n="footer.copyright">
+            © 2026 The Robotic Origami Challenge · IROS 2026
+          </div>
+          <div class="small" data-i18n="footer.bottomline">
+            Pittsburgh · Sept 27 — Oct 1, 2026
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      /* ============ ORGANIZERS ============ */
+      const organizers = [
+        {
+          name: 'Gao Yang',
+          aff: 'Tsinghua University / SpiritAI',
+          img: 'assets/organizers/gao-yang.jpg',
+          initials: 'GY',
+        },
+        {
+          name: 'Noriaki Hirose',
+          aff: 'Toyota',
+          img: 'assets/organizers/noriaki-hirose.jpg',
+          initials: 'NH',
+        },
+        {
+          name: 'Steve Xie',
+          aff: 'Lightwheel',
+          img: 'assets/organizers/steve-xie.jpg',
+          initials: 'SX',
+        },
+        {
+          name: 'Chris Paxton',
+          aff: 'Agility Robotics',
+          img: 'assets/organizers/chris-paxton.jpg',
+          initials: 'CP',
+        },
+        {
+          name: 'Jiafei Duan',
+          aff: 'NUS',
+          img: 'assets/organizers/jiafei-duan.webp',
+          initials: 'JD',
+        },
+        {
+          name: 'Michael Cho',
+          aff: 'FrodoBots',
+          img: 'assets/organizers/michael-cho.jpeg',
+          initials: 'MC',
+        },
+        {
+          name: 'Santiago Pravisani',
+          aff: 'FrodoBots',
+          img: 'assets/organizers/santiago-pravisani.jpg',
+          initials: 'SP',
+        },
+        { name: '?', aff: '', img: null, initials: '?' },
+      ]
+      const grid = document.getElementById('org-grid')
+      organizers.forEach((o, i) => {
+        const card = document.createElement('div')
+        card.className = 'org-card'
+        const idx = document.createElement('div')
+        idx.className = 'idx'
+        idx.textContent = String(i + 1).padStart(2, '0')
+        const photo = document.createElement('div')
+        photo.className = 'org-photo'
+        if (o.img) {
+          const img = document.createElement('img')
+          img.src = o.img
+          img.alt = o.name
+          img.onerror = () => {
+            photo.classList.add('placeholder')
+            photo.setAttribute('data-initials', o.initials)
+            img.remove()
+          }
+          photo.appendChild(img)
+        } else {
+          photo.classList.add('placeholder')
+          photo.setAttribute('data-initials', o.initials)
+        }
+        const c1 = document.createElement('span')
+        c1.className = 'corner'
+        const c2 = document.createElement('span')
+        c2.className = 'corner br'
+        photo.append(c1, c2)
+        const nm = document.createElement('div')
+        nm.className = 'org-name'
+        nm.textContent = o.name
+        const af = document.createElement('div')
+        af.className = 'org-aff'
+        af.textContent = o.aff
+        card.append(idx, photo, nm, af)
+        grid.appendChild(card)
+      })
+
+      /* ============ THEME ============ */
+      const TWEAKS = {
+        accentColor: '#C8372D',
+        sakuraColor: '#E8B4C0',
+        heroTitle: 'The Robotic Origami Challenge',
+      }
+
+      function applyTweaks(t) {
+        document.documentElement.style.setProperty(
+          '--vermillion',
+          t.accentColor,
+        )
+        document.documentElement.style.setProperty(
+          '--sakura',
+          t.sakuraColor,
+        )
+        const h1 = document.querySelector('h1.hero-title')
+        if (h1 && t.heroTitle) {
+          const title = t.heroTitle.trim()
+          if (title.toLowerCase().includes('origami')) {
+            h1.innerHTML = title.replace(
+              /origami/i,
+              '<em>Origami</em>',
+            )
+          } else {
+            const words = title.split(/\s+/)
+            const last = words.pop()
+            h1.innerHTML = words.join(' ') + ' <em>' + last + '</em>'
+          }
+        }
+      }
+      applyTweaks(TWEAKS)
+
+      /* ============ ZOOM MODAL ============ */
+      ;(function () {
+        const modal = document.getElementById('zoomModal')
+        if (!modal) return
+        const stage = modal.querySelector('.zoom-modal-stage')
+        const closeBtn = modal.querySelector('.zoom-close')
+
+        function openWithSvg(svg) {
+          stage.querySelectorAll('svg.illo').forEach((n) => n.remove())
+          const clone = svg.cloneNode(true)
+          clone.removeAttribute('aria-hidden')
+          clone.setAttribute('role', 'img')
+          stage.appendChild(clone)
+          modal.classList.add('is-open')
+          document.body.style.overflow = 'hidden'
+        }
+        function close() {
+          modal.classList.remove('is-open')
+          document.body.style.overflow = ''
+          stage.querySelectorAll('svg.illo').forEach((n) => n.remove())
+        }
+
+        document.querySelectorAll('.media-zoom').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const svg = btn
+              .closest('.media')
+              ?.querySelector('svg.illo')
+            if (svg) openWithSvg(svg)
+          })
+        })
+
+        closeBtn.addEventListener('click', close)
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) close()
+        })
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('is-open'))
+            close()
+        })
+      })()
+
+      /* ============ I18N (EN default · JA toggle) ============ */
+      const i18nJa = {
+        brand: 'ロボット<em>折紙</em>チャレンジ',
+        'nav.task': '課題',
+        'nav.resources': 'リソース',
+        'nav.organizers': '主催者',
+        'nav.partners': 'パートナー',
+        'nav.faq': 'よくある質問',
+        'nav.register': '登録',
+
+        'hero.eyebrow.iros': 'IROS 2026・ピッツバーグ',
+        'hero.eyebrow.edition': '初開催',
+        'hero.title': 'ロボット<em>折紙</em>チャレンジ',
+        'hero.sub':
+          '巧緻なロボットハンドの精密かつ連続的な紙の操作を、日本折紙協会の達人折り師と比較するベンチマーク競技。',
+        'hero.meta.dates': '2026年9月27日 — 10月1日',
+        'hero.meta.venue':
+          'デイビッド・L・ローレンス・コンベンションセンター',
+        'hero.meta.city': 'ピッツバーグ、ペンシルベニア州',
+        'hero.cta.register':
+          'ロボット折紙チャレンジ2026に登録する →',
+        'hero.cta.rules': 'ルールを読む',
+
+        'task.section_label': '§ 01・課題',
+        'task.title':
+          '<em>紙飛行機</em>を折る。全チーム同じ一つの形。',
+        'task.lede':
+          '伝統的な<em>紙飛行機</em> — 日本折紙協会が選定した4〜6折りの古典的な機体。',
+        'task.chip': '目標図形',
+        'task.card_name': '<em>紙飛行機</em>',
+        'task.card_desc':
+          '伝統的な日本の紙飛行機 — チームが選ぶ折り方により4〜6折り。折り目の精度、構造の忠実性、対称性、紙の完整性で評価される。',
+        'task.spec.paper_k': '標準用紙',
+        'task.spec.paper_v': '15 × 15 cm',
+        'task.spec.weight_k': '標準厚さ',
+        'task.spec.weight_v': '≥ 60 gsm',
+        'task.spec.folds_k': '折り数',
+        'task.spec.folds_v': '4 — 6',
+        'task.spec.score_k': '採点基準',
+        'task.spec.score_v': '折りに要した時間',
+
+        'fold.step1': '中央に折り目',
+        'fold.step2': '角を内側へ',
+        'fold.step3': '両辺を中央へ',
+        'fold.step4': '半分に折る',
+        'fold.step5': '翼を折る',
+        'fold.step6': '翼を広げる',
+
+        'rules.label': 'ルール',
+        'rules.lede':
+          '日本折紙協会の折紙グランドマスターが審査。彼らの技が採点基準となる。',
+        'rules.success_k': '成功 / 失敗',
+        'rules.success_v': '合格<em>または</em>不合格',
+        'rules.success_b':
+          '審査員が、認識できる飛行機が折られたかを判断する。',
+        'rules.time_k': '制限時間',
+        'rules.time_v': '<em>10</em>分<span class="u">/試行</span>',
+        'rules.time_b': '制限超過は自動的に失敗となる。',
+        'rules.judge_k': '審査者',
+        'rules.judge_v': '折紙<em>グランドマスター</em>',
+        'rules.judge_b': '日本折紙協会より。',
+        'rules.score_k': '採点基準',
+        'rules.score_v': '折りに要した<em>時間</em>',
+        'rules.score_b':
+          'より早く成功した折りが上位にランクされる。',
+        'rules.punchline':
+          'そして実際に飛行機が<em>飛んだら</em> — 追加点。',
+
+        'resources.section_label': '§ 02・リソース',
+        'resources.title': '全チームに<em>提供</em>するもの。',
+        'resources.lede':
+          '登録した全チームに提供される3つ — 参加の障壁は方針であり、物資ではない。',
+
+        'res.dataset.title': '遠隔操作データセット',
+        'res.dataset.desc':
+          '目標の折り順序について収集された500件以上の遠隔操作デモンストレーション。',
+        'res.dataset.li1':
+          '人間による遠隔操作デモンストレーション（500件以上）',
+        'res.dataset.li2': '折り順序ダイアグラム',
+        'res.dataset.li3': '参考用の完成例',
+        'res.dataset.cta': '近日公開',
+
+        'res.sim.title': 'シミュレーション<em>環境</em>',
+        'res.sim.desc':
+          'NVIDIA Isaac Simをベースとした高精度シミュレーション環境。紙の物理特性とハンドの運動学を備え、折り方策を端から端まで学習可能。',
+        'res.sim.li1': '塑性的な折り目と折り記憶を持つ薄殻紙物理',
+        'res.sim.li2':
+          '全パートナーロボットハンドのデジタルツイン',
+        'res.sim.li3': '代表的な紙飛行機タスクのセットアップ',
+        'res.sim.li4': '本番イベントと同じ採点基準',
+        'res.sim.foot':
+          'イベントに先駆けて公開・全チームで標準化。',
+
+        'res.eval.title': '実機<em>評価</em>',
+        'res.eval.desc':
+          'チームが方策をアップロードし、ピッツバーグへ輸送される同じアーム＋Sharpa Handsリグ上で実行できる遠隔実機ラボ。',
+        'res.eval.li1':
+          'Sharpa Hands巧緻エンドエフェクタとペアになった双腕アーム',
+        'res.eval.li2':
+          'シミュレーション、遠隔評価、現地で同一のリグ',
+        'res.eval.li3':
+          '方策をアップロード、評価をキューイング、採点を取得',
+        'res.eval.li4':
+          '障壁を下げる — ロボットをピッツバーグへ送る必要なし',
+        'res.eval.foot':
+          'イベントに先立ちチームポータルから予約可能。',
+
+        'organizers.section_label': '§ 03・主催者',
+        'organizers.title': '主催委員会。',
+        'organizers.lede':
+          'ロボティクス研究室、シミュレーション、折紙の実践にまたがる連合 — 公正で再現可能、適切に審査される競技を実現するために編成された。',
+        'organizers.count_label': '共同主催者',
+
+        'partners.section_label': '§ 04・パートナー',
+        'partners.title': '実現を支えてくれた組織。',
+        'partners.host': '主催',
+        'partners.experts': '人間の達人',
+        'partners.hardware': 'ハードウェア',
+        'partners.simulation': 'シミュレーション',
+
+        'faq.section_label': '§ 05・よくある質問',
+        'faq.title': 'よくある質問。',
+        'faq.q1.q': '具体的に何を折るのですか？',
+        'faq.q1.a':
+          '伝統的な日本の<em>紙飛行機</em>、折り方により4〜6折り。すべてのチームが同じ目標図形を折ります。',
+        'faq.q2.q': '採点はどのように計算されますか？',
+        'faq.q2.a':
+          '日本折紙協会の折紙グランドマスターが各試行を成功または失敗として判断し、成功した提出物を折りに要した時間で順位付けします — 早く成功した折りが上位にランクされます。各試行は10分以内です。飛行機が実際に飛ぶことはボーナスであり、正式な採点基準には含まれません。',
+        'faq.q3.q':
+          '自分のロボットハンドを持参する必要がありますか？',
+        'faq.q3.a':
+          'いいえ。本競技は標準化されたリグ — 双腕アームとSharpa Handsの組み合わせ — を提供します。これは遠隔評価ラボとIROS現地の両方で使用されます。',
+        'faq.q4.q': '登録はいつ開始されますか？',
+        'faq.q4.a':
+          '2026年初頭。下記フォームにご記入いただければ、登録開始時にシミュレーションおよび遠隔ラボへのアクセスとともにご連絡いたします。',
+        'faq.q5.q': '先にシミュレーションで訓練できますか？',
+        'faq.q5.a':
+          'はい。登録チームは、紙の変形物理、パートナーハンドのデジタルツイン、正確な採点基準を備えたLightwheelシミュレーション環境を、イベントに先駆けて受け取ります。',
+        'faq.q6.q': '遠隔評価のオプションはありますか？',
+        'faq.q6.a':
+          'はい。IROS会場と同じアーム＋Sharpa Handsリグで実機推論を行うため、当方の遠隔ラボに方策をアップロードできます — ロボットをピッツバーグまで送る必要はありません。',
+        'faq.q7.q': '審査は誰が行いますか？',
+        'faq.q7.a':
+          '日本折紙協会の代表とロボティクス研究者からなる混合パネルです。',
+        'faq.q8.q': '産業チームも参加できますか？',
+        'faq.q8.a':
+          'はい — 学術および産業チーム双方を歓迎します。次世代の巧緻なハンドおよび操作方策を開発するグループからの強力な参加を期待しています。',
+        'faq.q9.q':
+          'パートナーまたはスポンサーになるには？',
+        'faq.q9.a':
+          '下記からご連絡ください。特に、追加の巧緻ハンドプラットフォームおよび採点基準への貢献者に関心があります。',
+
+        'register.section_label': '§ 06・登録',
+        'register.title': '最初の<em>折り手</em>になる。',
+        'register.badge': '登録間もなく開始',
+        'register.heading':
+          'フォームにご記入いただければ、<em>すべてが公開された時</em>にお知らせします — シミュレーション、遠隔ラボ、登録。',
+        'register.body':
+          'チームについてお聞かせください。シミュレーションへのアクセス、図形仕様、参加チーム募集が開始した際にご連絡いたします。',
+        'register.cta': 'フォームを開く →',
+        'register.contact.email': 'メール',
+        'register.contact.updates': '最新情報',
+        'register.contact.press': '報道',
+
+        'footer.brand': 'ロボット<em>折紙</em>チャレンジ',
+        'footer.tag':
+          'IROS 2026 — 伝統的な日本の折紙を基準とした巧緻な操作のベンチマーク。',
+        'footer.col.program': 'プログラム',
+        'footer.col.event': 'イベント',
+        'footer.col.contact': 'お問い合わせ',
+        'footer.email': 'メール',
+        'footer.copyright':
+          '© 2026 ロボット折紙チャレンジ · IROS 2026',
+        'footer.bottomline':
+          'ピッツバーグ · 2026年9月27日 — 10月1日',
+      }
+
+      function captureI18nDefaults() {
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          if (!el.dataset.i18nEn)
+            el.dataset.i18nEn = el.innerHTML
+        })
+      }
+
+      function applyLang(lang) {
+        document.documentElement.lang = lang === 'ja' ? 'ja' : 'en'
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const key = el.dataset.i18n
+          if (lang === 'ja' && i18nJa[key] !== undefined) {
+            el.innerHTML = i18nJa[key]
+          } else {
+            el.innerHTML = el.dataset.i18nEn || el.innerHTML
+          }
+        })
+        try {
+          localStorage.setItem('roc_lang', lang)
+        } catch (e) {}
+      }
+
+      captureI18nDefaults()
+      let savedLang = 'en'
+      try {
+        const v = localStorage.getItem('roc_lang')
+        if (v === 'ja' || v === 'en') savedLang = v
+      } catch (e) {}
+      const langSel = document.getElementById('langSelect')
+      if (langSel) {
+        langSel.value = savedLang
+        langSel.addEventListener('change', () =>
+          applyLang(langSel.value),
+        )
+      }
+      applyLang(savedLang)
+    </script>
+
+    <!-- Zoom modal -->
+    <div
+      id="zoomModal"
+      class="zoom-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Enlarged illustration"
+    >
+      <div class="zoom-modal-stage"></div>
+      <button type="button" class="zoom-close" aria-label="Close">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            d="M3 3 L13 13 M13 3 L3 13"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    </div>
+  </body>
+</html>
