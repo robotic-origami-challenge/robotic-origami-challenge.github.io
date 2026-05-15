@@ -515,18 +515,18 @@
       .section-label {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 14px;
         font-family: var(--text);
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.16em;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--vermillion);
-        margin-bottom: 18px;
+        margin-bottom: 16px;
       }
       .section-label .kanji {
         font-family: var(--display);
-        font-size: 14px;
+        font-size: 18px;
         color: var(--ink-4);
         letter-spacing: 0;
         text-transform: none;
@@ -564,7 +564,7 @@
         margin-top: 18px;
       }
 
-      /* ---------- CHALLENGE (§1) ---------- */
+      /* ---------- CHALLENGE (1) ---------- */
       .challenge-pull {
         font-family: var(--display);
         font-weight: 300;
@@ -675,7 +675,7 @@
         margin-top: 2px;
       }
 
-      /* ---------- TASK (§2) single tier ---------- */
+      /* ---------- TASK (2) single tier ---------- */
       .task-card {
         background: var(--paper-2);
         border: 1px solid var(--rule);
@@ -822,22 +822,22 @@
         font-style: italic;
       }
 
-      /* ---------- RULES (under §1 Task) ---------- */
+      /* ---------- RULES (under 1 Task) ---------- */
       .rules-head {
         margin-top: 56px;
         margin-bottom: 20px;
       }
       .rules-label {
         font-family: var(--text);
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.16em;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--vermillion);
-        margin-bottom: 10px;
+        margin-bottom: 14px;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 14px;
       }
       .rules-label::before {
         content: '';
@@ -991,7 +991,7 @@
         font-style: italic;
       }
 
-      /* ---------- RESOURCES (§3 now Resources) ---------- */
+      /* ---------- RESOURCES (3 now Resources) ---------- */
       .resources {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -2225,10 +2225,13 @@
         }
 
         .section-label {
-          font-size: 10px;
+          font-size: 13px;
         }
         h2.section-title {
           font-size: 30px;
+        }
+        .rules-label {
+          font-size: 15px;
         }
       }
     </style>
@@ -2351,12 +2354,12 @@
       </div>
     </section>
 
-    <!-- §1 TASK (single tier — paper airplane) -->
+    <!-- 1 TASK (single tier — paper airplane) -->
     <section id="task">
       <div class="wrap">
         <div class="section-head">
           <div class="section-label">
-            <span data-i18n="task.section_label">§ 01 · The Task</span>
+            <span data-i18n="task.section_label">01 · The Task</span>
             <span class="kanji">紙飛行機</span>
           </div>
           <h2 class="section-title" data-i18n="task.title">
@@ -2445,7 +2448,7 @@
           </video>
           <div class="cap">
             <small data-i18n="rules.noa.kicker"
-              >日本折紙協会 · NOA</small
+              >Nippon Origami Association · 日本折紙協会</small
             >
             <span data-i18n="rules.noa.label"
               >The masters who set the bar.</span
@@ -2540,13 +2543,13 @@
       </div>
     </section>
 
-    <!-- §3 RESOURCES -->
+    <!-- 3 RESOURCES -->
     <section id="resources">
       <div class="wrap">
         <div class="section-head">
           <div class="section-label">
             <span data-i18n="resources.section_label"
-              >§ 02 · Resources</span
+              >02 · Resources</span
             >
             <span class="kanji">資源</span>
           </div>
@@ -2673,23 +2676,6 @@
                   <circle cx="250" cy="175" r="2" />
                 </g>
               </svg>
-              <button
-                type="button"
-                class="media-zoom"
-                aria-label="Open larger view"
-                data-zoom-target="sim-illustration"
-              >
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <path
-                    d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
             </div>
             <div class="body">
               <div class="idx">02 · 模擬</div>
@@ -2773,13 +2759,13 @@
       </div>
     </section>
 
-    <!-- §4 ORGANIZERS -->
+    <!-- 4 ORGANIZERS -->
     <section id="organizers">
       <div class="wrap">
         <div class="section-head">
           <div class="section-label">
             <span data-i18n="organizers.section_label"
-              >§ 03 · Organizers</span
+              >03 · Organizers</span
             >
             <span class="kanji">主催</span>
           </div>
@@ -2807,13 +2793,13 @@
       </div>
     </section>
 
-    <!-- §6 PARTNERS -->
+    <!-- 6 PARTNERS -->
     <section id="partners">
       <div class="wrap">
         <div class="section-head">
           <div class="section-label">
             <span data-i18n="partners.section_label"
-              >§ 04 · Partners</span
+              >04 · Partners</span
             >
             <span class="kanji">協力</span>
           </div>
@@ -2856,12 +2842,12 @@
       </div>
     </section>
 
-    <!-- §7 FAQ -->
+    <!-- 7 FAQ -->
     <section id="faq">
       <div class="wrap-narrow">
         <div class="section-head">
           <div class="section-label">
-            <span data-i18n="faq.section_label">§ 05 · FAQ</span>
+            <span data-i18n="faq.section_label">05 · FAQ</span>
             <span class="kanji">問答</span>
           </div>
           <h2 class="section-title" data-i18n="faq.title">
@@ -2991,7 +2977,7 @@
         <div class="section-head">
           <div class="section-label">
             <span data-i18n="register.section_label"
-              >§ 06 · Registration</span
+              >06 · Registration</span
             >
             <span class="kanji">登録</span>
           </div>
@@ -3305,7 +3291,7 @@
           'ロボット折紙チャレンジ2026に登録する →',
         'hero.cta.rules': 'ルールを読む',
 
-        'task.section_label': '§ 01・課題',
+        'task.section_label': '01・課題',
         'task.title':
           '<em>紙飛行機</em>を折る。全チーム同じ一つの形。',
         'task.lede':
@@ -3333,7 +3319,7 @@
         'rules.label': 'ルール',
         'rules.lede':
           '日本折紙協会の折紙グランドマスターが審査。彼らの技が採点基準となる。',
-        'rules.noa.kicker': '日本折紙協会 · NOA',
+        'rules.noa.kicker': '日本折紙協会',
         'rules.noa.label': '基準を定めるのは、彼らの手仕事。',
         'rules.success_k': '成功 / 失敗',
         'rules.success_v': '合格<em>または</em>不合格',
@@ -3352,7 +3338,7 @@
         'rules.punchline':
           'そして実際に飛行機が<em>飛んだら</em> — 追加点。',
 
-        'resources.section_label': '§ 02・リソース',
+        'resources.section_label': '02・リソース',
         'resources.title': '全チームに<em>提供</em>するもの。',
         'resources.lede':
           '登録した全チームに提供される3つ — 参加の障壁は方針であり、物資ではない。',
@@ -3391,20 +3377,20 @@
         'res.eval.foot':
           'イベントに先立ちチームポータルから予約可能。',
 
-        'organizers.section_label': '§ 03・主催者',
+        'organizers.section_label': '03・主催者',
         'organizers.title': '主催委員会。',
         'organizers.lede':
           'ロボティクス研究室、シミュレーション、折紙の実践にまたがる連合 — 公正で再現可能、適切に審査される競技を実現するために編成された。',
         'organizers.count_label': '共同主催者',
 
-        'partners.section_label': '§ 04・パートナー',
+        'partners.section_label': '04・パートナー',
         'partners.title': '実現を支えてくれた組織。',
         'partners.host': '主催',
         'partners.experts': '人間の達人',
         'partners.hardware': 'ハードウェア',
         'partners.simulation': 'シミュレーション',
 
-        'faq.section_label': '§ 05・よくある質問',
+        'faq.section_label': '05・よくある質問',
         'faq.title': 'よくある質問。',
         'faq.q1.q': '具体的に何を折るのですか？',
         'faq.q1.a':
@@ -3436,7 +3422,7 @@
         'faq.q9.a':
           '下記からご連絡ください。特に、追加の巧緻ハンドプラットフォームおよび採点基準への貢献者に関心があります。',
 
-        'register.section_label': '§ 06・登録',
+        'register.section_label': '06・登録',
         'register.title': '最初の<em>折り手</em>になる。',
         'register.badge': '登録間もなく開始',
         'register.heading':
