@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robotic-origami-challenge.github.io/sitemap.xml
