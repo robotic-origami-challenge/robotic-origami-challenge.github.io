@@ -165,7 +165,7 @@
                 "name": "How is scoring calculated?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "An Origami Grand Master from the Nippon Origami Association judges pass/fail. Among successful folds, faster wins — folding time is the ranking criterion. 10-minute cap per attempt. If the airplane actually flies, bonus points (not part of the formal rubric)."
+                  "text": "An Origami Grand Master from the Nippon Origami Association judges pass/fail. Among successful folds, faster wins — folding time is the ranking criterion. 10-minute cap per attempt. Whether the airplane actually flies has no bearing on scoring."
                 }
               },
               {
@@ -1612,6 +1612,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center 22%;
         filter: grayscale(0.15) contrast(1.05);
         transition: filter 0.4s ease;
       }
@@ -2401,7 +2402,7 @@
           grid-template-columns: 1fr;
         }
         .org-photo {
-          aspect-ratio: 4 / 3;
+          aspect-ratio: 1 / 1;
         }
 
         .partners-grid {
@@ -2728,7 +2729,8 @@
             </g>
           </svg>
           <p class="rules-punchline" data-i18n="rules.punchline">
-            And if the plane actually <em>flies</em> — extra points.
+            And if the plane actually <em>flies</em>, let the sky be the
+            reward.
           </p>
         </div>
       </div>
@@ -3077,8 +3079,9 @@
               Association judges each attempt as a successful fold or
               a failed one, then ranks the successful submissions by
               folding time — faster successful folds rank higher. Each
-              attempt is capped at 10 minutes. The plane actually
-              flying is a bonus, not part of the formal rubric.
+              attempt is capped at 10 minutes. Whether the plane
+              actually flies has no bearing on the score — a flight that
+              holds the air is simply its own reward.
             </div>
           </details>
           <details class="faq-item">
@@ -3569,7 +3572,7 @@
         'rules.score_b':
           'より早く完成した方が上位にランクされる。',
         'rules.punchline':
-          'そして実際に飛行機が<em>飛んだら</em> — 追加点。',
+          'そして実際に飛行機が<em>飛んだら</em>、空こそが何よりのご褒美。',
 
         'resources.section_label': '02・リソース',
         'resources.title': '全チームに<em>提供</em>するもの。',
@@ -3630,7 +3633,7 @@
           '伝統的な日本の<em>紙飛行機</em>、折り方により4〜6折り。すべてのチームが同じ目標図形を折ります。',
         'faq.q2.q': '採点はどのように計算されますか？',
         'faq.q2.a':
-          '日本折紙協会の折紙グランドマスターが各試行を成功または失敗として判断し、成功した提出物を完成に要した時間で順位付けします — 早く完成した方が上位にランクされます。各試行は10分以内です。飛行機が実際に飛ぶことはボーナスであり、正式な採点基準には含まれません。',
+          '日本折紙協会の折紙グランドマスターが各試行を成功または失敗として判断し、成功した提出物を完成に要した時間で順位付けします — 早く完成した方が上位にランクされます。各試行は10分以内です。飛行機が実際に飛ぶかどうかは採点には影響しませんが、空を舞う一機は、それ自体が何よりのご褒美です。',
         'faq.q3.q':
           '自分のロボットハンドを持参する必要がありますか？',
         'faq.q3.a':
