@@ -157,7 +157,7 @@
                 "name": "What exactly do teams fold?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "A traditional Japanese paper airplane (紙飛行機 / kami hikōki), 4–6 folds, on 15 × 15 cm paper at ≥ 60 gsm. Same target figure for every team."
+                  "text": "A traditional Japanese paper airplane (紙飛行機 / kami hikōki), exactly 6 folds, on 15 × 15 cm paper at ≥ 60 gsm. Same target figure for every team."
                 }
               },
               {
@@ -1698,7 +1698,7 @@
       /* ---------- PARTNERS ---------- */
       .partners-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         border: 1px solid var(--rule);
         border-radius: 6px;
         overflow: hidden;
@@ -2076,8 +2076,14 @@
         .partners-grid .partner-cell:nth-child(2n) {
           border-right: 0;
         }
-        .partners-grid .partner-cell:nth-child(-n + 2) {
+        .partners-grid
+          .partner-cell:nth-child(-n + 4):not(:last-child) {
           border-bottom: 1px solid var(--rule);
+        }
+        /* odd final logo spans the full width instead of sitting alone */
+        .partners-grid .partner-cell:last-child:nth-child(odd) {
+          grid-column: 1 / -1;
+          border-right: 0;
         }
         section {
           padding: 64px 0;
@@ -2558,7 +2564,7 @@
             Fold <em>a paper airplane.</em> One figure, every team.
           </h2>
           <p class="section-lede" data-i18n="task.lede">
-            Traditional <em>kami hikōki</em> — a classic 4–6 fold
+            Traditional <em>kami hikōki</em> — a classic six-fold
             airplane curated by the Nippon Origami Association
             (日本折紙協会).
           </p>
@@ -2578,10 +2584,9 @@
               The <em>Paper Airplane</em>
             </h3>
             <p class="task-desc" data-i18n="task.card_desc">
-              A traditional Japanese paper airplane — 4 to 6 folds
-              depending on the variant chosen by the team. Judged on
-              crease accuracy, structural fidelity, symmetry, and
-              paper integrity.
+              A traditional Japanese paper airplane, folded in exactly
+              six folds. Judged on crease accuracy, structural
+              fidelity, symmetry, and paper integrity.
             </p>
 
             <div class="task-specs">
@@ -2603,7 +2608,7 @@
               </div>
               <div class="task-spec">
                 <div class="k" data-i18n="task.spec.folds_k">Folds</div>
-                <div class="v" data-i18n="task.spec.folds_v">4 — 6</div>
+                <div class="v" data-i18n="task.spec.folds_v">6</div>
               </div>
               <div class="task-spec">
                 <div class="k" data-i18n="task.spec.score_k">
@@ -2993,7 +2998,7 @@
       </div>
     </section>
 
-    <!-- 6 PARTNERS -->
+    <!-- PARTNERS -->
     <section id="partners">
       <div class="wrap">
         <div class="section-head">
@@ -3010,32 +3015,30 @@
 
         <div class="partners-grid">
           <div class="partner-cell">
-            <div class="lbl" data-i18n="partners.host">Host</div>
             <img src="assets/partners/bitrobot.png" alt="BitRobot" />
           </div>
           <div class="partner-cell wide">
-            <div class="lbl" data-i18n="partners.experts">
-              Human Experts
-            </div>
             <img
               src="assets/partners/nippon-origami-association.png?v=2"
               alt="Nippon Origami Association (日本折紙協会)"
             />
           </div>
           <div class="partner-cell invert">
-            <div class="lbl" data-i18n="partners.hardware">Hardware</div>
             <img
               src="assets/partners/sharpa.png"
               alt="Sharpa Hands"
             />
           </div>
           <div class="partner-cell invert">
-            <div class="lbl" data-i18n="partners.simulation">
-              Simulation
-            </div>
             <img
               src="assets/partners/lightwheel.png"
               alt="Lightwheel"
+            />
+          </div>
+          <div class="partner-cell wide">
+            <img
+              src="assets/partners/toyota.png"
+              alt="Toyota Central R&D Labs"
             />
           </div>
         </div>
@@ -3064,7 +3067,7 @@
             <div class="faq-a" data-i18n="faq.q1.a">
               A traditional Japanese paper airplane (<em
                 >kami hikōki</em
-              >), 4 to 6 folds depending on the variant. Every team
+              >), folded in exactly six folds. Every team
               folds the same target figure.
             </div>
           </details>
@@ -3531,17 +3534,17 @@
         'task.title':
           '<em>紙飛行機</em>を折る。全チーム同じ一つの形。',
         'task.lede':
-          '伝統的な<em>紙飛行機</em> — 日本折紙協会が選定した4〜6折りの古典的な機体。',
+          '伝統的な<em>紙飛行機</em> — 日本折紙協会が選定した、ちょうど6折りの古典的な機体。',
         'task.chip': '目標図形',
         'task.card_name': '<em>紙飛行機</em>',
         'task.card_desc':
-          '伝統的な日本の紙飛行機 — チームが選ぶ折り方により4〜6折り。折り目の精度、構造の忠実性、対称性、紙の完整性で評価される。',
+          '伝統的な日本の紙飛行機 — ちょうど6折り。折り目の精度、構造の忠実性、対称性、紙の完整性で評価される。',
         'task.spec.paper_k': '標準用紙',
         'task.spec.paper_v': '15 × 15 cm',
         'task.spec.weight_k': '標準厚さ',
         'task.spec.weight_v': '≥ 60 gsm',
         'task.spec.folds_k': '折り数',
-        'task.spec.folds_v': '4 — 6',
+        'task.spec.folds_v': '6',
         'task.spec.score_k': '採点基準',
         'task.spec.score_v': '完成に要した時間',
 
@@ -3630,7 +3633,7 @@
         'faq.title': 'よくある質問。',
         'faq.q1.q': '具体的に何を折るのですか？',
         'faq.q1.a':
-          '伝統的な日本の<em>紙飛行機</em>、折り方により4〜6折り。すべてのチームが同じ目標図形を折ります。',
+          '伝統的な日本の<em>紙飛行機</em>、ちょうど6折り。すべてのチームが同じ目標図形を折ります。',
         'faq.q2.q': '採点はどのように計算されますか？',
         'faq.q2.a':
           '日本折紙協会の折紙グランドマスターが各試行を成功または失敗として判断し、成功した提出物を完成に要した時間で順位付けします — 早く完成した方が上位にランクされます。各試行は10分以内です。飛行機が実際に飛ぶかどうかは採点には影響しませんが、空を舞う一機は、それ自体が何よりのご褒美です。',
