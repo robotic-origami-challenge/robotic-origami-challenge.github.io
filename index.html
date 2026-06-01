@@ -2757,10 +2757,17 @@
           <!-- 1. Datasets -->
           <div class="res-card">
             <div class="media">
-              <img
-                src="assets/datasets-moments.jpg"
-                alt="Key moments from the Sharpa Hands paper-airplane fold sequence"
-              />
+              <video
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="assets/datasets-fold-poster.jpg"
+                aria-label="Sharpa Hands bimanual robot folding paper, teleoperation demonstration"
+              >
+                <source src="assets/datasets-fold.mp4" type="video/mp4" />
+              </video>
             </div>
             <div class="body">
               <div class="idx">01 · 資料</div>
@@ -2909,7 +2916,7 @@
                 loop
                 playsinline
                 preload="metadata"
-                poster="assets/datasets-moments.jpg"
+                poster="assets/remote-lab-poster.jpg"
               >
                 <source src="assets/remote-lab.mp4" type="video/mp4" />
               </video>
@@ -2973,7 +2980,7 @@
               reproducible, well-judged competition.
             </p>
             <div class="meta">
-              <span class="v">08</span>
+              <span class="v">13</span>
               <span data-i18n="organizers.count_label"
                 >Co-organizers</span
               >
@@ -3334,18 +3341,6 @@
           initials: 'JD',
         },
         {
-          name: 'Haoquan Fang',
-          aff: 'Stanford University',
-          img: 'assets/organizers/haoquan-fang.jpg',
-          initials: 'HF',
-        },
-        {
-          name: 'Chengbo Yuan',
-          aff: 'Tsinghua University',
-          img: 'assets/organizers/chengbo-yuan.jpg',
-          initials: 'CY',
-        },
-        {
           name: 'Yunfang Yang',
           aff: 'Sharpa',
           img: 'assets/organizers/yunfang-yang.jpg',
@@ -3358,6 +3353,18 @@
           initials: 'ZK',
         },
         {
+          name: 'Louis Lian',
+          aff: 'Lightwheel',
+          img: 'assets/organizers/louis-lian.jpg',
+          initials: 'LL',
+        },
+        {
+          name: 'Chunyuan Liu',
+          aff: 'Lightwheel',
+          img: 'assets/organizers/chunyuan-liu.jpg',
+          initials: 'CL',
+        },
+        {
           name: 'Michael Cho',
           aff: 'FrodoBots',
           img: 'assets/organizers/michael-cho.jpeg',
@@ -3368,6 +3375,18 @@
           aff: 'FrodoBots',
           img: 'assets/organizers/santiago-pravisani.jpg',
           initials: 'SP',
+        },
+        {
+          name: 'Chengbo Yuan',
+          aff: 'Tsinghua University',
+          img: 'assets/organizers/chengbo-yuan.jpg',
+          initials: 'CY',
+        },
+        {
+          name: 'Haoquan Fang',
+          aff: 'Stanford University',
+          img: 'assets/organizers/haoquan-fang.jpg',
+          initials: 'HF',
         },
       ]
       const grid = document.getElementById('org-grid')
