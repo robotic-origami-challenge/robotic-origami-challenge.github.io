@@ -674,6 +674,16 @@
       .btn-primary:hover {
         background: var(--vermillion-deep);
       }
+      .btn-primary:disabled,
+      .btn-primary.btn-disabled {
+        background: rgba(243, 236, 222, 0.18);
+        color: rgba(243, 236, 222, 0.6);
+        cursor: not-allowed;
+      }
+      .btn-primary:disabled:hover,
+      .btn-primary.btn-disabled:hover {
+        background: rgba(243, 236, 222, 0.18);
+      }
       .btn-ghost {
         font-family: var(--text);
         font-size: 14px;
@@ -2470,11 +2480,11 @@
           </li>
           <li>
             <a
-              href="https://forms.gle/Q76ijnKK9L1dZz1q8"
+              href="https://forms.gle/Y46WUArricVAQPBv9"
               target="_blank"
               rel="noopener noreferrer"
               ><button class="btn-cta" data-i18n="nav.register">
-                Register
+                Register interest
               </button></a
             >
           </li>
@@ -2535,17 +2545,19 @@
         </div>
 
         <div class="hero-cta-row">
+          <button
+            class="btn-primary btn-disabled"
+            data-i18n="hero.cta.closed"
+            disabled
+          >
+            Registrations closed
+          </button>
           <a
-            href="https://forms.gle/Q76ijnKK9L1dZz1q8"
+            href="https://forms.gle/Y46WUArricVAQPBv9"
             target="_blank"
             rel="noopener noreferrer"
-            ><button class="btn-primary" data-i18n="hero.cta.register">
-              Register your team →
-            </button></a
-          >
-          <a href="#task"
-            ><button class="btn-ghost" data-i18n="hero.cta.rules">
-              Read the rules
+            ><button class="btn-ghost" data-i18n="hero.cta.interest">
+              Register interest for next edition →
             </button></a
           >
         </div>
@@ -3193,25 +3205,25 @@
         <div class="register-card">
           <div>
             <div class="badge-soon" data-i18n="register.badge">
-              Registration opens soon
+              Registrations closed
             </div>
             <h3 data-i18n="register.heading">
-              Complete the form and we'll notify you when
-              <em>everything goes live</em> — sim, remote lab,
-              registration.
+              Registration for this edition is
+              <em>now closed.</em> Register your interest and we'll
+              notify you when the next edition opens.
             </h3>
             <p data-i18n="register.body">
               Tell us about your team. We'll be in touch with
               simulation access, the figure spec, and the
-              call-for-teams when it opens.
+              call-for-teams for the next edition.
             </p>
             <a
-              href="https://forms.gle/Q76ijnKK9L1dZz1q8"
+              href="https://forms.gle/Y46WUArricVAQPBv9"
               target="_blank"
               rel="noopener noreferrer"
               class="btn-primary register-cta"
               data-i18n="register.cta"
-              >Open the form →</a
+              >Register interest for next edition →</a
             >
           </div>
           <div class="contact-list">
@@ -3282,11 +3294,11 @@
               <ul>
                 <li>
                   <a
-                    href="https://forms.gle/Q76ijnKK9L1dZz1q8"
+                    href="https://forms.gle/Y46WUArricVAQPBv9"
                     target="_blank"
                     rel="noopener noreferrer"
                     data-i18n="nav.register"
-                    >Register</a
+                    >Register interest</a
                   >
                 </li>
                 <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
@@ -3515,7 +3527,7 @@
         'nav.organizers': '主催者',
         'nav.partners': 'パートナー',
         'nav.faq': 'よくある質問',
-        'nav.register': '登録',
+        'nav.register': '関心を登録',
 
         'hero.eyebrow.iros': 'IROS 2026・ピッツバーグ',
         'hero.eyebrow.edition': '初開催',
@@ -3526,9 +3538,8 @@
         'hero.meta.venue':
           'デイビッド・L・ローレンス・コンベンションセンター',
         'hero.meta.city': 'ピッツバーグ、ペンシルベニア州',
-        'hero.cta.register':
-          'チームを登録する →',
-        'hero.cta.rules': 'ルールを読む',
+        'hero.cta.closed': '登録は締め切りました',
+        'hero.cta.interest': '次回大会の関心を登録する →',
 
         'task.section_label': '01・課題',
         'task.title':
@@ -3663,12 +3674,12 @@
 
         'register.section_label': '06・登録',
         'register.title': '最初の<em>折り手</em>になる。',
-        'register.badge': '登録間もなく開始',
+        'register.badge': '登録は締め切りました',
         'register.heading':
-          'フォームにご記入いただければ、<em>すべてが公開された時</em>にお知らせします — シミュレーション、遠隔ラボ、登録。',
+          '今回大会の登録は<em>締め切りました。</em>関心を登録いただければ、次回大会の開始時にお知らせします。',
         'register.body':
-          'チームについてお聞かせください。シミュレーションへのアクセス、図形仕様、参加チーム募集が開始した際にご連絡いたします。',
-        'register.cta': 'フォームを開く →',
+          'チームについてお聞かせください。シミュレーションへのアクセス、図形仕様、次回大会の参加チーム募集についてご連絡いたします。',
+        'register.cta': '次回大会の関心を登録する →',
         'register.contact.email': 'メール',
         'register.contact.updates': '最新情報',
         'register.contact.press': '報道',
