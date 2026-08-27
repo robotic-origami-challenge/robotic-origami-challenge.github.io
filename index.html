@@ -1708,7 +1708,7 @@
       /* ---------- PARTNERS ---------- */
       .partners-grid {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         border: 1px solid var(--rule);
         border-radius: 6px;
         overflow: hidden;
@@ -1782,6 +1782,18 @@
       .partner-cell.wide img {
         max-height: 56px;
         max-width: 90%;
+      }
+      /* .stack: compact two-tier marks (wordmark over device) need more
+     height than a single-line wordmark to read at the same weight. The
+     tighter vertical padding keeps the taller logo inside the cell's
+     aspect box so it never drives the row past its neighbours. */
+      .partner-cell.stack {
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+      .partner-cell.stack img {
+        max-height: 54px;
+        max-width: 74%;
       }
 
       /* ---------- FAQ ---------- */
@@ -2311,6 +2323,9 @@
         .partner-cell.wide img {
           max-height: 44px;
         }
+        .partner-cell.stack img {
+          max-height: 50px;
+        }
 
         /* FAQ */
         .faq-q {
@@ -2427,6 +2442,9 @@
         .partner-cell {
           border-right: 0 !important;
           aspect-ratio: 5 / 2;
+        }
+        .partner-cell:not(:last-child) {
+          border-bottom: 1px solid var(--rule);
         }
         .partner-cell:last-child {
           border-bottom: 0;
@@ -3051,6 +3069,12 @@
             <img
               src="assets/partners/toyota.png"
               alt="Toyota Central R&D Labs"
+            />
+          </div>
+          <div class="partner-cell stack">
+            <img
+              src="assets/partners/aws.png"
+              alt="Amazon Web Services"
             />
           </div>
         </div>
