@@ -3017,7 +3017,7 @@
               reproducible, well-judged competition.
             </p>
             <div class="meta">
-              <span class="v">13</span>
+              <span class="v" id="org-count">14</span>
               <span data-i18n="organizers.count_label"
                 >Co-organizers</span
               >
@@ -3430,8 +3430,16 @@
           img: 'assets/organizers/haoquan-fang.jpg',
           initials: 'HF',
         },
+        {
+          name: 'Cole Harrison',
+          aff: 'Amazon',
+          img: 'assets/organizers/cole-harrison.jpg',
+          initials: 'CH',
+        },
       ]
       const grid = document.getElementById('org-grid')
+      const orgCount = document.getElementById('org-count')
+      if (orgCount) orgCount.textContent = String(organizers.length)
       organizers.forEach((o, i) => {
         const card = document.createElement('div')
         card.className = 'org-card'
